@@ -10,9 +10,7 @@
     <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/css/style.css" rel="stylesheet">
     
-    <script src="/components/jquery/dist/jquery.min.js"></script>
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPqXQJCToReQSoyQdEIsPlFwMltXDJ6to&sensor=false&libraries=geometry"></script>
-    <script src="/resources/js/init.js"></script>
     
     <!--[if lt IE 9]>
     <script src="/components/html5shiv/dist/html5shiv.min.js"></script>
@@ -87,13 +85,34 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="map"></div>
+
+    <div class="modal fade" id="download-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Downloading Tour Divide Track...</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        This may take a few moments.  For accuracy, the app uses a highly detailed track (100k+ points) - about 5MB.
+                    </p>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">0%</div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/jStorage/jstorage.min.js"></script>
+    <script src="/resources/js/init.js"></script>
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

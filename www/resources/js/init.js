@@ -1,6 +1,6 @@
 (function() {
 
-var map;
+var map, td_metadata;
 
 jQuery(document).ready(function($){
 
@@ -43,35 +43,78 @@ jQuery(document).ready(function($){
     });
     basin_polyline.setMap(map);
 
-    $.ajax({
-        type: "GET",
-        url: "/resources/data/TourDivide2015_v2-4867822901e60f48c393ac2b3ef8644e.gpx",
-        dataType: "xml",
-        success: function(xml) {
-            var points = [];
-            var bounds = new google.maps.LatLngBounds ();
-            $(xml).find("trkpt").each(function() {
-                var lat = $(this).attr("lat");
-                var lon = $(this).attr("lon");
-                var p = new google.maps.LatLng(lat, lon);
-                points.push(p);
-                bounds.extend(p);
-            });
+    var td_metadata_cache_key = 'td-2015-metadata-807729cf47d29680b096bec964a482f4',
+        td_metadata_cache_expiry = 60*60*24*31*1000;//31 days in milliseconds
 
-            var poly = new google.maps.Polyline({
-                path: points,
-                strokeColor: "#770000",
-                strokeOpacity: 0.9,
-                strokeWeight: 3
-            });
+    td_metadata = $.jStorage.get(td_metadata_cache_key);
 
-            poly.setMap(map);
+    if( typeof td_metadata != 'undefined' && td_metadata != null ) {
+        console.log('data from LOCALSTORE');
+        loadRoute();
 
-            // fit bounds to track
-            //map.fitBounds(bounds);
-        }
-    });
+    } else {
+
+        //the cache key might have change (causing the cache miss) because
+        //the file was updated.  In this case, flush storage to remove all
+        //old data.
+        $.jStorage.flush()
+
+        var ajax = $.ajax({
+            beforeSend: function () {
+                $('#download-modal').modal('show');
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                var progress_bar = $('#download-modal').find('.progress-bar');
+                xhr.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percent_complete = Math.round(evt.loaded / evt.total * 100);
+                        progress_bar
+                            .attr('aria-valuenow', percent_complete)
+                            .width(percent_complete + '%')
+                            .text(percent_complete + '%');
+
+                    }
+                }, false);
+                return xhr;
+            },
+            type: 'GET',
+            url: "/resources/data/td-15.min.json",
+            data: {},
+            success: function (data) {
+                $.jStorage.set(td_metadata_cache_key, data, { TTL: td_metadata_cache_expiry})
+                td_metadata = data;
+
+                loadRoute();
+
+                console.log('data from GET');
+                $('#download-modal').modal('hide');
+            }
+        });
+    }
 });
+
+function loadRoute() {
+
+    var route = new google.maps.Polyline({
+        strokeColor: '#770000',
+        strokeWeight: 3,
+        strokeOpacity: 1.0
+    });
+
+    var td_coordinates = [];
+    for(var i=0; i < td_metadata.length; i++) {
+        td_coordinates.push(
+            new google.maps.LatLng(
+                td_metadata[i].c[0],
+                td_metadata[i].c[1]
+            )
+        );
+    }
+
+    route.setPath(td_coordinates);
+    route.setMap(map);
+}
 
 var resizeMap = function(){
     jQuery('#map').height(
@@ -93,5 +136,6 @@ function debounce(func, wait, immediate) {
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
     };
-};
+}
+
 })();
