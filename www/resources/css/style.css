@@ -2,8 +2,10 @@ body,html {
     height: 100%;
     width: 100%;
 }
+
 .nav.nav-tabs {
     font-size: 12px;
+    margin-bottom: 15px;
 }
 
 #map {

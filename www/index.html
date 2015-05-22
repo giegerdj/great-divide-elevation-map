@@ -31,17 +31,24 @@
                             <li role="presentation">
                                 <a href="#options" aria-controls="home" role="tab" data-toggle="tab">Route Options</a>
                             </li>
-                            <li role="presentation" class="active">
+                            <li role="presentation">
                                 <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Elevation Profile</a>
                             </li>
                             <li role="presentation">
-                                <a href="#stats" aria-controls="messages" role="tab" data-toggle="tab">Stats</a>
+                                <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
+                            </li>
+                            <li role="presentation" class="pull-right active">
+                                <a href="#github" aria-controls="github" role="tab" data-toggle="tab">Contribute on Github</a>
                             </li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="options">
+                                <div class="alert alert-warning">
+                                    Use <a href="http://eatsleepridegreatdivide.com">2011 version</a> for GDMBR elevation profiles.
+                                </div>
+
                                 <form>
                                     <div class="radio">
                                         <label>
@@ -57,23 +64,27 @@
                                     </div>
                                 </form>
                             </div>
-                            <div role="tabpanel" class="tab-pane active" id="profile">
-                                <svg id="elevation-profile"></svg>
+
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <small>(soon)</small>
                             </div>
+
                             <div role="tabpanel" class="tab-pane" id="stats">
-                                <h4>Miles <span id="start-mile"></span> to <span id="end-mile"></span></h4>
-                                <p>
-                                    <strong>Distance:</strong> <span id="distance"></span>
-                                </p>
-                                <p>
-                                    <strong>Ascent:</strong> <span id="ascent"></span>
-                                </p>
-                                <p>
-                                    <strong>Descent:</strong> <span id="descent"></span>
-                                </p>
-                                <p>
-                                    <strong>Net:</strong> <span id="net-elevation"></span>
-                                </p>
+                                <small>(soon)</small>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane active" id="github">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            This projects is on GitHub.  The source is available if you'd like to contribute or
+                                            verify the data.
+                                        </p>
+                                        <a href="https://github.com/giegerdj/td-2015-map" class="btn btn-primary btn-lg">
+                                            Contribute on GitHub
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
