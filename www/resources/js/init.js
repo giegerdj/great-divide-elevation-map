@@ -47,10 +47,11 @@ jQuery(document).ready(function($){
         td_metadata_cache_expiry = 60*60*24*31*1000;//31 days in milliseconds
 
     td_metadata = $.jStorage.get(td_metadata_cache_key);
+    console.log(td_metadata);
 
     if( typeof td_metadata != 'undefined' && td_metadata != null ) {
         console.log('data from LOCALSTORE');
-        loadRoute();
+        loadRoute(td_metadata);
 
     } else {
 
@@ -82,38 +83,21 @@ jQuery(document).ready(function($){
             url: "/resources/data/td-15.min.json",
             data: {},
             success: function (data) {
-                $.jStorage.set(td_metadata_cache_key, data, { TTL: td_metadata_cache_expiry})
-                td_metadata = data;
-
-                loadRoute();
-
+                $.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
                 console.log('data from GET');
+                loadRoute(data);
+
                 $('#download-modal').modal('hide');
             }
         });
     }
 });
 
-function loadRoute() {
-
-    var route = new google.maps.Polyline({
-        strokeColor: '#770000',
-        strokeWeight: 3,
-        strokeOpacity: 1.0
+function loadRoute(data) {
+    var rm = new RouteMap({
+        metadata: data,
+        map: map
     });
-
-    var td_coordinates = [];
-    for(var i=0; i < td_metadata.length; i++) {
-        td_coordinates.push(
-            new google.maps.LatLng(
-                td_metadata[i].c[0],
-                td_metadata[i].c[1]
-            )
-        );
-    }
-
-    route.setPath(td_coordinates);
-    route.setMap(map);
 }
 
 var resizeMap = function(){
