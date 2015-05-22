@@ -1,0 +1,21 @@
+{
+  "name": "td-2015-map",
+  "version": "0.1.0",
+  "homepage": "td-2015.eatsleepridegreatdivide.com",
+  "authors": [
+    "Dave Gieger <dave@giegertechnology.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "www/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "d3": "~3.5.5"
+  },
+  "private": true
+}
