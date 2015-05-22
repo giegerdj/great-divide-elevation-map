@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "/resources/data/TourDivide2015_v1-147cab8ab8c71931089fe51edba44696.gpx",
+        url: "/resources/data/TourDivide2015_v2-4867822901e60f48c393ac2b3ef8644e.gpx",
         dataType: "xml",
         success: function(xml) {
             var points = [];
