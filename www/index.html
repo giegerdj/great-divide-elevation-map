@@ -1,1 +1,88 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <title>Tour Divide '15 Map</title>
+    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/style.css" rel="stylesheet">
+    
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPqXQJCToReQSoyQdEIsPlFwMltXDJ6to&sensor=false&libraries=geometry"></script>
+    <script src="/resources/js/init.js"></script>
+    
+    <!--[if lt IE 9]>
+    <script src="/components/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="/components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div role="tabpanel">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                <a href="#options" aria-controls="home" role="tab" data-toggle="tab">Route Options</a>
+                            </li>
+                            <li role="presentation" class="active">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Elevation Profile</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#stats" aria-controls="messages" role="tab" data-toggle="tab">Stats</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" id="options">
+                                <form>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="track" id="td-track" value="td" checked>
+                                            Tour Divide 2015
+                                        </label>
+                                    </div>
+                                    <div class="radio disabled">
+                                        <label>
+                                            <input type="radio" name="track" id="gdmbr-track" value="gdmbr" disabled>
+                                            GDMBR 2015 (coming soon)
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane active" id="profile">
+                                <svg id="elevation-profile"></svg>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="stats">
+                                <h4>Miles <span id="start-mile"></span> to <span id="end-mile"></span></h4>
+                                <p>
+                                    <strong>Distance:</strong> <span id="distance"></span>
+                                </p>
+                                <p>
+                                    <strong>Ascent:</strong> <span id="ascent"></span>
+                                </p>
+                                <p>
+                                    <strong>Descent:</strong> <span id="descent"></span>
+                                </p>
+                                <p>
+                                    <strong>Net:</strong> <span id="net-elevation"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
