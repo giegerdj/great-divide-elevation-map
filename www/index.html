@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div role="tabpanel">
@@ -29,13 +29,13 @@
                             <li role="presentation">
                                 <a href="#options" aria-controls="home" role="tab" data-toggle="tab">Route Options</a>
                             </li>
-                            <li role="presentation">
-                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Elevation Profile</a>
+                            <li role="presentation" class="active">
+                                <a href="#elevation-tab" aria-controls="elevation-tab" role="tab" data-toggle="tab">Elevation Profile</a>
                             </li>
                             <li role="presentation">
                                 <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
                             </li>
-                            <li role="presentation" class="pull-right active">
+                            <li role="presentation" class="pull-right">
                                 <a href="#github" aria-controls="github" role="tab" data-toggle="tab">Contribute on Github</a>
                             </li>
                         </ul>
@@ -63,15 +63,15 @@
                                 </form>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="profile">
-                                <small>(soon)</small>
+                            <div role="tabpanel" class="tab-pane active" id="elevation-tab">
+                                <svg id="elevation-profile"></svg>
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="stats">
                                 <small>(soon)</small>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane active" id="github">
+                            <div role="tabpanel" class="tab-pane" id="github">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
@@ -113,6 +113,7 @@
     <script src="/components/jquery/dist/jquery.min.js"></script>
     <script src="/components/jStorage/jstorage.min.js"></script>
     <script src="/resources/js/SnapToRoute.js"></script>
+    <script src="/components/d3/d3.min.js"></script>
     <script src="/resources/js/RouteMap.js"></script>
     <script src="/resources/js/init.js"></script>
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>

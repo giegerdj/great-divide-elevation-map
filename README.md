@@ -4,9 +4,7 @@
 ##To Do
 ###Immediate
 * DON'T FORGET TO TRAIN FOR YOUR OWN TOUR DIVIDE, DAVE!!!
-* Generate elevation profile charts (d3.js) of entire route
-* Add "sticky" markers to route to focus elevation profile
-    * Edge case: non N=>S direction 
+* Edge case: non N=>S direction 
 * Fix missing areas of route
     * Lower Kananaskis Lake
     * Elkford
@@ -29,4 +27,4 @@
 
 ###Long Term
 * Make app mobile-friendly
-* Choose between main route and alternates/detours 
+* Choose between main route and alternates/detours

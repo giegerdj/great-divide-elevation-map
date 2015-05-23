@@ -47,10 +47,8 @@ jQuery(document).ready(function($){
         td_metadata_cache_expiry = 60*60*24*31*1000;//31 days in milliseconds
 
     td_metadata = $.jStorage.get(td_metadata_cache_key);
-    console.log(td_metadata);
 
     if( typeof td_metadata != 'undefined' && td_metadata != null ) {
-        console.log('data from LOCALSTORE');
         loadRoute(td_metadata);
 
     } else {
@@ -84,7 +82,6 @@ jQuery(document).ready(function($){
             data: {},
             success: function (data) {
                 $.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
-                console.log('data from GET');
                 loadRoute(data);
 
                 $('#download-modal').modal('hide');
@@ -96,7 +93,8 @@ jQuery(document).ready(function($){
 function loadRoute(data) {
     var rm = new RouteMap({
         metadata: data,
-        map: map
+        map: map,
+        elevation_profile_container_id: '#elevation-profile'
     });
 }
 
