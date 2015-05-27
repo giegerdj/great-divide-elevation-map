@@ -2,13 +2,19 @@
 function RouteMap( config ) {
     this.metadata = config.metadata;
     this.map = config.map;
+    this.updateCallback = config.updateCallback;
+
+    this.is_reverse = false;
     this.profile = {};
     this.profile.container = d3.select(config.elevation_profile_container_id);
 
     this.route_coordinates = [];
     this.profile.data = [];
 
+    this.profile.reverse_data = [];
+
     this.route = null;
+    this.total_distance = 0;
     this.start_marker = null;
     this.end_marker = null;
     this.start_snap = null;
@@ -16,7 +22,8 @@ function RouteMap( config ) {
 
     this.FEET_PER_METER = 3.28084,
     this.METERS_PER_MILE = 1609.34;
-
+    this.STANDARD_DIRECTION = 'standard';
+    this.REVERSE_DIRECTION = 'reverse';
     this.init();
 }
 
@@ -45,6 +52,7 @@ RouteMap.prototype.init = function() {
             elevation: this.metadata[i].e * this.FEET_PER_METER
         });
     }
+    this.total_distance = total_distance / this.METERS_PER_MILE;
 
     this.route.setPath(this.route_coordinates);
     this.route.setMap(this.map);
@@ -58,6 +66,53 @@ RouteMap.prototype.init = function() {
         me.createElevationProfile();
     },200);
 
+};
+/*
+RouteMap.prototype.calculateReverseRouteData = function() {
+
+    if( this.profile.reverse_data.length != 0) {
+        return;
+    }
+
+    var total_distance = 0;
+    for(var i=0; i < this.metadata.length; i++) {
+        var ii = (this.metadata.length-i-1);
+
+        total_distance += this.metadata[ii].d;
+
+        this.profile.reverse_data.push({
+            distance: total_distance / this.METERS_PER_MILE,
+            elevation: this.metadata[ii].e * this.FEET_PER_METER
+        });
+    }
+
+};
+*/
+RouteMap.prototype.setDirection = function(direction) {
+    var a_index = this.start_snap.getClosestVertexIndex();
+    var b_index = this.end_snap.getClosestVertexIndex();
+
+    if(!( (direction == this.STANDARD_DIRECTION && a_index > b_index) ||
+        (direction == this.REVERSE_DIRECTION && a_index < b_index)  )) {
+        //the markers are already set in the specified direction
+        return;
+    }
+
+    var a_pos = this.start_marker.getPosition();
+    var b_pos = this.end_marker.getPosition();
+
+    this.start_marker.setPosition(b_pos);
+
+    // clear and re-add snapToRoute.  workaround because "getClosestVertexIndex()" doesn't
+    // update properly when direction changed in this method.
+    this.start_snap = null;
+    this.start_snap = new SnapToRoute(this.map, this.start_marker, this.route);
+
+    this.end_marker.setPosition(a_pos);
+    this.end_snap = null;
+    this.end_snap = new SnapToRoute(this.map, this.end_marker, this.route);
+
+    this.dragEnd();
 };
 
 RouteMap.prototype.placeMarkers = function() {
@@ -90,11 +145,18 @@ RouteMap.prototype.placeMarkers = function() {
     });
 };
 
+RouteMap.prototype.assertIsReverse = function() {
+    return this.is_reverse;
+};
+
 RouteMap.prototype.createElevationProfile = function() {
     var me = this;
 
     this.profile.margin = {top: 20, right: 50, bottom: 15, left: 50};
 
+    /**
+     * @TODO refactor this dimension stuff into a helper method
+     */
     var id = '#' + this.profile.container.attr('id');
     var profile_parent = jQuery(id).parent();
     profile_parent.css('visibility', 'hidden').css('display','block');
@@ -103,6 +165,7 @@ RouteMap.prototype.createElevationProfile = function() {
     this.profile.height = parseInt(this.profile.container.style("height")) - this.profile.margin.top - this.profile.margin.bottom;
 
     profile_parent.css('visibility', '').css('display','');
+    //
 
     //
     //start axes
@@ -169,8 +232,8 @@ RouteMap.prototype.createElevationProfile = function() {
     this.profile.xRelative.domain(dist_extent);
 
     this.profile.y.domain([
-        Math.floor(min_elevation/1000)*1000,
-        Math.ceil(max_elevation/1000)*1000
+        Math.floor(min_elevation/1000)*1000,//round to the next 1000 increment
+        Math.ceil(max_elevation/1000)*1000//round to the previous 1000 increment
     ]);
 
     this.profile.svg.append("g")
@@ -206,6 +269,9 @@ RouteMap.prototype.createElevationProfile = function() {
 
 RouteMap.prototype.resizeElevationProfile = function(){
 
+    /**
+     * @TODO refactor this dimension stuff into a helper method
+     */
     var id = '#' + this.profile.container.attr('id');
     var profile_parent = jQuery(id).parent();
     profile_parent.css('visibility', 'hidden').css('display','block');
@@ -214,6 +280,7 @@ RouteMap.prototype.resizeElevationProfile = function(){
     this.profile.height = parseInt(this.profile.container.style("height")) - this.profile.margin.top - this.profile.margin.bottom;
 
     profile_parent.css('visibility', '').css('display','');
+    //
 
     this.profile.x.range([0, this.profile.width]);
     this.profile.xRelative.range([0,this.profile.width]);
@@ -251,8 +318,43 @@ RouteMap.prototype.dragEnd = function() {
     var start_index = this.start_snap.getClosestVertexIndex(),
         end_index = this.end_snap.getClosestVertexIndex();
 
-    var start_mile = this.profile.data[start_index].distance,
-        end_mile = this.profile.data[end_index].distance;
+    if(start_index == end_index) {
+        alert('No distance selected.  Spread out the markers.');
+        return;
+    }
+
+    this.is_reverse = (start_index > end_index);
+
+    if( !this.assertIsReverse() ) {
+        //@todo refactor to getProfileStartMile()
+        //@todo refactor to getProfileEndMile()
+        var start_mile = this.profile.data[start_index].distance,
+            end_mile = this.profile.data[end_index].distance;
+        var data = this.profile.data;
+    } else {
+        alert('Reverse stats/profile not supported at this time...sorry.')
+        return;
+        //only calculate the reverse data if we have to...
+        //don't wanna waste CPU cycles
+        console.log('REVERSE');
+
+        this.calculateReverseRouteData();
+
+        //the index is based on the route, which is never reversed
+        //Banff will always be index 0 on the polyline
+        /*
+        start_index =  this.profile.data.length - 1 - start_index;
+        end_index = this.profile.data.length - 1 - end_index;
+        console.log(start_index, end_index);
+
+        var start_mile = this.profile.reverse_data[start_index].distance,
+            end_mile = this.profile.reverse_data[end_index].distance;
+        var data = this.profile.reverse_data;
+        */
+    }
+
+    console.log('start', start_index, start_mile);
+    console.log('end', end_index, end_mile);
 
     this.profile.x.domain([start_mile,end_mile]);
     this.profile.xRelative.domain([0, end_mile-start_mile]);
@@ -282,6 +384,7 @@ RouteMap.prototype.dragEnd = function() {
     this.profile.svg.select(".y.axis.right").call(this.profile.yAxisRight);
     this.profile.svg.select(".y.axis.left").call(this.profile.yAxisLeft);
 
+    this.updateCallback(this);
 };
 
 RouteMap.prototype.getStartMile = function() {

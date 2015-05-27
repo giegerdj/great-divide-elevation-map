@@ -91,10 +91,30 @@ jQuery(document).ready(function($){
 });
 
 function loadRoute(data) {
+    var direction_radio = jQuery('#options input[name="direction"]');
+    var normal_radio = jQuery('#options input[name="direction"][value="standard"]');
+    var reverse_radio = jQuery('#options input[name="direction"][value="reverse"]');
+
     var rm = new RouteMap({
         metadata: data,
         map: map,
-        elevation_profile_container_id: '#elevation-profile'
+        elevation_profile_container_id: '#elevation-profile',
+        updateCallback: function(me){
+
+            if( me.assertIsReverse() ) {
+                reverse_radio.attr('checked','checked');
+            } else {
+                normal_radio.attr('checked','checked');
+            }
+        }
+    });
+    direction_radio.change(function(e){
+        if( jQuery(this).val() == 'standard' ) {
+            rm.setDirection(rm.STANDARD_DIRECTION);
+        } else {
+            rm.setDirection(rm.REVERSE_DIRECTION);
+        }
+
     });
 }
 

@@ -16,6 +16,17 @@
     <script src="/components/html5shiv/dist/html5shiv.min.js"></script>
     <script src="/components/respond/dest/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-8215888-11', 'auto');
+        ga('send', 'pageview');
+    </script>
+
 </head>
 <body>
     <div id="app">
@@ -43,24 +54,51 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="options">
-                                <div class="alert alert-warning">
-                                    Use <a href="http://eatsleepridegreatdivide.com">2011 version</a> for GDMBR elevation profiles.
-                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="alert alert-warning">
+                                            Use <a href="http://eatsleepridegreatdivide.com">2011 version</a> for GDMBR elevation profiles.
+                                        </div>
 
-                                <form>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="track" id="td-track" value="td" checked>
-                                            Tour Divide 2015
-                                        </label>
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Route</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="track" id="td-track" value="td" checked>
+                                                        Tour Divide 2015
+                                                    </label>
+                                                </div>
+                                                <div class="radio disabled">
+                                                    <label>
+                                                        <input type="radio" name="track" id="gdmbr-track" value="gdmbr" disabled>
+                                                        GDMBR 2015 (coming soon)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="radio disabled">
-                                        <label>
-                                            <input type="radio" name="track" id="gdmbr-track" value="gdmbr" disabled>
-                                            GDMBR 2015 (coming soon)
-                                        </label>
+                                    <div class="col-xs-6">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Direction</label>
+
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="direction" id="southbound-direction" value="standard" checked>
+                                                        Southbound
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="direction" id="northbound-direction" value="reverse">
+                                                        Northbound
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
                             </div>
 
                             <div role="tabpanel" class="tab-pane active" id="elevation-tab">
