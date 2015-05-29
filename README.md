@@ -3,13 +3,7 @@
 
 ##To Do
 ###Immediate
-* DON'T FORGET TO TRAIN FOR YOUR OWN TOUR DIVIDE, DAVE!!!
-* Edge case: non N=>S direction 
-* Fix missing areas of route
-    * Lower Kananaskis Lake
-    * Elkford
-    * Columbia Falls
-    Union Pass re-route
+* Edge case: non N=>S direction
 * Remove loops
     * Lincoln
     * Wise River
