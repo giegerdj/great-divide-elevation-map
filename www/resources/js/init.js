@@ -1,8 +1,8 @@
 (function() {
 
-var map, td_metadata;
+var map, td_metadata, official_polyline;
 
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
 
     resizeMap();
     $(window).on("resize", resizeMapDebounce);
@@ -15,16 +15,16 @@ jQuery(document).ready(function($){
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         center: new google.maps.LatLng(42.0, -110.0)
     };
-    
-    map = new google.maps.Map( document.getElementById('map'), options );
+
+    map = new google.maps.Map(document.getElementById('map'), options);
     var sw = new google.maps.LatLng(34.0, -116.0);
     var ne = new google.maps.LatLng(54.0, -105.0);
-    
+
     var bounds = new google.maps.LatLngBounds(sw, ne);
-    
+
     var map_bounds = new google.maps.LatLngBounds(new google.maps.LatLng(bounds.max_lat, bounds.max_lon));
     map_bounds.extend(new google.maps.LatLng(bounds.min_lat, bounds.min_lon));
-    
+
     map.fitBounds(bounds);
 
     var divide_polyline = new google.maps.Polyline({
@@ -43,12 +43,12 @@ jQuery(document).ready(function($){
     });
     basin_polyline.setMap(map);
 
-    var td_metadata_cache_key = 'td-2015-metadata-807729cf47d29680b096bec964a482f4',
-        td_metadata_cache_expiry = 60*60*24*31*1000;//31 days in milliseconds
+    var td_metadata_cache_key = 'td-2015-metadata-3e65ed4e91a9290acbbba9e0a1b238fa',
+        td_metadata_cache_expiry = 60 * 60 * 24 * 31 * 1000;//31 days in milliseconds
 
     td_metadata = $.jStorage.get(td_metadata_cache_key);
 
-    if( typeof td_metadata != 'undefined' && td_metadata != null ) {
+    if (typeof td_metadata != 'undefined' && td_metadata != null) {
         loadRoute(td_metadata);
 
     } else {
@@ -78,7 +78,7 @@ jQuery(document).ready(function($){
                 return xhr;
             },
             type: 'GET',
-            url: "/resources/data/td-15.min.json",
+            url: "/resources/data/TD-2015-detailed.min.js",
             data: {},
             success: function (data) {
                 $.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
@@ -88,12 +88,61 @@ jQuery(document).ready(function($){
             }
         });
     }
+
+    $('#options-tab input[name="show-official-gpx"]').change(function(){
+        if( $(this).is(':checked') ) {
+            showOfficialRoute();
+        } else {
+            hideOfficialRoute();
+        }
+
+    });
+
 });
 
+function showOfficialRoute() {
+    if( typeof official_polyline == 'object' ) {
+        official_polyline.setMap(map);
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "/resources/data/TourDivide2015_v2-4867822901e60f48c393ac2b3ef8644e.gpx",
+            dataType: "xml",
+            success: function (xml) {
+                var points = [];
+                var bounds = new google.maps.LatLngBounds();
+                $(xml).find("trkpt").each(function () {
+                    var lat = $(this).attr("lat");
+                    var lon = $(this).attr("lon");
+                    var p = new google.maps.LatLng(lat, lon);
+                    points.push(p);
+                    bounds.extend(p);
+                });
+
+                official_polyline = new google.maps.Polyline({
+                    // use your own style here
+                    path: points,
+                    strokeColor: "#FF00AA",
+                    strokeOpacity: .7,
+                    strokeWeight: 2
+                });
+                official_polyline.setMap(map);
+            }
+        });
+    }
+}
+
+function hideOfficialRoute() {
+    //edge case: checkbox toggled back prior to the load ajax completing
+    if(typeof official_polyline != 'undefined') {
+        official_polyline.setMap(null);
+    }
+}
+
 function loadRoute(data) {
-    var direction_radio = jQuery('#options input[name="direction"]');
-    var normal_radio = jQuery('#options input[name="direction"][value="standard"]');
-    var reverse_radio = jQuery('#options input[name="direction"][value="reverse"]');
+    var direction_radio = jQuery('#options-tab input[name="direction"]');
+    var normal_radio = jQuery('#options-tab input[name="direction"][value="standard"]');
+    var reverse_radio = jQuery('#options-tab input[name="direction"][value="reverse"]');
 
     var rm = new RouteMap({
         metadata: data,

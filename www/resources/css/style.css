@@ -10,8 +10,6 @@ body,html {
 
 .tab-content .tab-pane.active {
     max-height: 155px;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 #map {

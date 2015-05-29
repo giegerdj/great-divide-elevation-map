@@ -38,28 +38,27 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation">
-                                <a href="#options" aria-controls="home" role="tab" data-toggle="tab">Route Options</a>
+                                <a href="#options-tab" aria-controls="options-tab" role="tab" data-toggle="tab">Route Options</a>
                             </li>
                             <li role="presentation" class="active">
                                 <a href="#elevation-tab" aria-controls="elevation-tab" role="tab" data-toggle="tab">Elevation Profile</a>
                             </li>
                             <li role="presentation">
-                                <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
+                                <a href="#stats-tab" aria-controls="stats-tab" role="tab" data-toggle="tab">Stats</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#disclaimer-tab" aria-controls="disclaimer-tab" role="tab" data-toggle="tab">Disclaimer</a>
                             </li>
                             <li role="presentation" class="pull-right">
-                                <a href="#github" aria-controls="github" role="tab" data-toggle="tab">Contribute on Github</a>
+                                <a href="#github-tab" aria-controls="github-tab" role="tab" data-toggle="tab">Contribute on Github</a>
                             </li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane" id="options">
+                            <div role="tabpanel" class="tab-pane" id="options-tab">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <div class="alert alert-warning">
-                                            Use <a href="http://eatsleepridegreatdivide.com">2011 version</a> for GDMBR elevation profiles.
-                                        </div>
-
                                         <form>
                                             <div class="form-group">
                                                 <label>Route</label>
@@ -69,10 +68,15 @@
                                                         Tour Divide 2015
                                                     </label>
                                                 </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" value="" name="show-official-gpx" /> Overlay official "TourDivide2015_v2.gpx" track (visual verification)
+                                                    </label>
+                                                </div>
                                                 <div class="radio disabled">
                                                     <label>
                                                         <input type="radio" name="track" id="gdmbr-track" value="gdmbr" disabled>
-                                                        GDMBR 2015 (coming soon)
+                                                        GDMBR 2015 (coming soon) - use <a href="http://eatsleepridegreatdivide.com">2011 version</a>.
                                                     </label>
                                                 </div>
                                             </div>
@@ -105,18 +109,46 @@
                                 <svg id="elevation-profile"></svg>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="stats">
+                            <div role="tabpanel" class="tab-pane" id="stats-tab">
                                 <small>(soon)</small>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="github">
+                            <div role="tabpanel" class="tab-pane" id="disclaimer-tab" style="overflow-x:hidden; overflow-y:scroll;">
+                                <p>
+                                    <strong>Last Update: May 29, 2015</strong>
+                                </p>
+                                <p>
+                                    <strong>Source</strong><br />
+                                    This map shows the route for the <strong>2015 Tour Divide</strong>.  It differs from the official
+                                    Great Divide Mountain Bike Route in a few significant ways.
+                                    <br />
+                                    Data was stitched together from various sources - gps records
+                                    from <a href="https://app.strava.com" target="_blank">Strava</a> activities and
+                                    the <a href="http://topofusion.com/divide/gps.php" target="_blank">official TD 2015 GPX track</a>.
+                                </p>
+                                <p>
+                                    <strong>Accuracy</strong><br />
+                                    Is the mileage 100% accurate? No, but it is close.  GPS error is unavoidable.<br />
+                                    Is the elevation profile 100% accurate? No, but it is close enough to compare
+                                    efforts between resupplies.
+                                </p>
+                                <p>
+                                    <strong>Navigation</strong><br />
+                                    Don't rely on this map for the purpose of navigation.  Buy the
+                                    <a href="adventurecycling.org/routes-and-maps/adventure-cycling-route-network/great-divide-mountain-bike-route/" target="_blank">
+                                        Official Adventure Cycling GDMBR map set
+                                    </a> instead.
+                                </p>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="github-tab">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
                                             This projects is on GitHub.  The source is available if you'd like to contribute or
                                             verify the data.
                                         </p>
-                                        <a href="https://github.com/giegerdj/td-2015-map" class="btn btn-primary btn-lg">
+                                        <a href="https://github.com/giegerdj/td-2015-map" class="btn btn-primary btn-lg" target="_blank">
                                             Contribute on GitHub
                                         </a>
                                     </div>

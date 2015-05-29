@@ -330,15 +330,13 @@ RouteMap.prototype.dragEnd = function() {
         //@todo refactor to getProfileEndMile()
         var start_mile = this.profile.data[start_index].distance,
             end_mile = this.profile.data[end_index].distance;
-        var data = this.profile.data;
     } else {
         alert('Reverse stats/profile not supported at this time...sorry.')
         return;
         //only calculate the reverse data if we have to...
         //don't wanna waste CPU cycles
-        console.log('REVERSE');
 
-        this.calculateReverseRouteData();
+        //this.calculateReverseRouteData();
 
         //the index is based on the route, which is never reversed
         //Banff will always be index 0 on the polyline
@@ -352,9 +350,6 @@ RouteMap.prototype.dragEnd = function() {
         var data = this.profile.reverse_data;
         */
     }
-
-    console.log('start', start_index, start_mile);
-    console.log('end', end_index, end_mile);
 
     this.profile.x.domain([start_mile,end_mile]);
     this.profile.xRelative.domain([0, end_mile-start_mile]);
