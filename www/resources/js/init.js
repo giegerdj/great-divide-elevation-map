@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
         path: google.maps.geometry.encoding.decodePath('y{}`GzalwSrOyKdKjUfHxQ~y@|x@`h@~^fSfI|XvHvw@}BtRgDdWqc@z\\_d@xUfAzRk@xi@vCfYpPxX|DtnAbAhcA~Avc@mErk@mUjh@{`@pr@q`Ap_@}g@v`@eIr}@lBxUhAx^dLjmA|k@j_@t[`n@dj@zn@j}@jHpUjcAjoA~Sl\\ne@xf@pPfMlPlIzUfAzbAuGn}@QtUq@ppAfs@zv@bq@`f@fv@zk@ty@jQn`@`KlQvi@tC`^aE|U`EfHtQyC|_B_Cti@zBzY`Cp]hU~~@~Krh@|TwSthAkDbSfEnPjIlaA~\\vs@te@dN|XpK|\\rTzk@`KlQlU~~@_Ilb@oFpZqWhaBnh@fj@x^bL|U`EtO}Gxo@k|@zw@wdArl@ycAbg@u_A|f@mcAvLsKbShEdd@`D`VzHlVpPh_Arl@jOuOhy@_b@b|@gb@z\\yc@`m@gx@ro@a`AlFoZaQwXqMmI_YwHkYgTiT_d@ol@{hAoOo{@x@_ZiCke@uKy`@uJ_sAkHs~AcTmiBcIyuBcTunAgTurAa_@c~DpKacAvNscAln@miAdt@ap@~q@iz@xb@oiBdQs{BgF{h@eAo|@`Zmc@~QkWnr@}cAjf@kvAl@se@vFucBxJgaA|Kqb@`a@gnAbWag@`RkWbRoSfRuOnOoObw@aRnXu@hc@uPlvAiPfhAkO`gC{GxUfAnPjMvMjM`KlQdQj`@rY~[pUkDxWwShQoj@zCkVZ_u@_BisA}Ji~A{Nap@a^wiAuUknAyG{vApNij@n`@oPtCeZm@ii@pK}m@lYov@`w@qfByJg~AwUerAqJwvAbCkm@pOa`BsB}UcEu~ArC_^lIqZ`RiWt]gP~`@aA`RiWvrAsj@br@VfoA|Tbp@zVh`@iTrZwW~QgWjh@ad@~r@ax@pTyb@pFkZ~Ns^rSw}@nLaSy[_aBqJmzAkMezA{LakAuOwjAw[aaBaVu}A{XiaBcJ{nAyVoxB}R}yAkHkYwY}c@uMoMqMsIic@nPuWh[oWh_@_XvO_SsAqfA{QqRsnAx@y]yGkbBgGgoAcCkaC`Nk}@tXauA|Nmb@zuA}~Bt}@gsAfx@ekA`f@oTjlAsdAnv@oh@f_Aka@hh@wg@b]cc@rj@a{@rg@s~@~t@izAxl@gnA`Lcf@rFgZlJs{AIufBuDk~AaMmzAaR}bAk\\_`@}JoQ_\\mT_q@uy@eHoU{`AorBuKkl@u]}mAm[eaBkEyU|Hkq@baBqj@bWkn@}Bce@mMuiB]oa@rh@{_@`z@mQh]g_@vFeZwBq]qBqY{i@clB`Iom@pOgOhReSaNy\\ye@cbAgK}`@[s]pIkZjUuKnO}Rbe@uv@sBo]oPauBuHuh@eKc]wr@eWorAyh@aQmd@fAcVlIg^h\\ueA`U_Wz}@ovAdWar@w_@}v@my@k}@{p@}y@_HuQkTow@')
     });
     basin_polyline.setMap(map);
-
+    /*
     var td_metadata_cache_key = 'td-2015-metadata-3e65ed4e91a9290acbbba9e0a1b238fa',
         td_metadata_cache_expiry = 60 * 60 * 24 * 31 * 1000;//31 days in milliseconds
 
@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
         //the file was updated.  In this case, flush storage to remove all
         //old data.
         $.jStorage.flush()
-
+     */
         var ajax = $.ajax({
             beforeSend: function () {
                 $('#download-modal').modal('show');
@@ -81,13 +81,13 @@ jQuery(document).ready(function($) {
             url: "/resources/data/TD-2015-detailed.min.js",
             data: {},
             success: function (data) {
-                $.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
+                //$.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
                 loadRoute(data);
 
                 $('#download-modal').modal('hide');
             }
         });
-    }
+    //}
 
     $('#options-tab input[name="show-official-gpx"]').change(function(){
         if( $(this).is(':checked') ) {
