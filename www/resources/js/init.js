@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
             url: "/resources/data/TD-2015-detailed.min.json",
             data: {},
             success: function (data) {
-                //$.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
+                $.jStorage.set(td_metadata_cache_key, data, {TTL: td_metadata_cache_expiry})
                 loadRoute(data);
 
                 $('#download-modal').modal('hide');
