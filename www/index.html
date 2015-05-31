@@ -44,7 +44,7 @@
                                 <a href="#elevation-tab" aria-controls="elevation-tab" role="tab" data-toggle="tab">Elevation Profile</a>
                             </li>
                             <li role="presentation">
-                                <a href="#stats-tab" aria-controls="stats-tab" role="tab" data-toggle="tab">Stats</a>
+                                <a href="#stats-tab" aria-controls="stats-tab" role="tab" data-toggle="tab">Segment Stats</a>
                             </li>
                             <li role="presentation">
                                 <a href="#disclaimer-tab" aria-controls="disclaimer-tab" role="tab" data-toggle="tab">Disclaimer</a>
@@ -110,7 +110,13 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="stats-tab">
-                                <small>(soon)</small>
+                                <p>
+                                    <strong>Distance:</strong> <span id="distance"></span> mi.<br />
+                                    <strong>Ascent:</strong> <span id="ascent"></span> ft.<br />
+                                    <strong>Descent:</strong> <span id="descent"></span> ft.<br />
+                                    <strong>Net Elevation:</strong> <span id="net-elevation"></span> ft.<br />
+                                    <strong>Miles:</strong> <span id="start-mile"></span> - <span id="end-mile"></span>
+                                </p>
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="disclaimer-tab" style="overflow-x:hidden; overflow-y:scroll;">
@@ -130,7 +136,9 @@
                                     <strong>Accuracy</strong><br />
                                     Is the mileage 100% accurate? No, but it is close.  GPS error is unavoidable.<br />
                                     Is the elevation profile 100% accurate? No, but it is close enough to compare
-                                    efforts between resupplies.
+                                    efforts between resupplies.<br />
+                                    Elevation gain/loss is calculated where the grade between points is greater than 1.5%.  A naive, but
+                                    simple approach.
                                 </p>
                                 <p>
                                     <strong>Navigation</strong><br />

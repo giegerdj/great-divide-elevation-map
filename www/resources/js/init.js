@@ -43,7 +43,7 @@ jQuery(document).ready(function($) {
     });
     basin_polyline.setMap(map);
 
-    var td_metadata_cache_key = '2015-metadata-3e65ed4e91a9290acbbba9e0a1b238fa',
+    var td_metadata_cache_key = '2015-metadata-3e584f435db02dc0363da74173119c11',
         td_metadata_cache_expiry = 60 * 60 * 24 * 31 * 1000;//31 days in milliseconds
 
     td_metadata = $.jStorage.get(td_metadata_cache_key);
@@ -155,6 +155,14 @@ function loadRoute(data) {
             } else {
                 normal_radio.attr('checked','checked');
             }
+
+            var stats = me.getSegmentStats();
+            jQuery('#distance').text( numberWithCommas(stats.distance) )
+            jQuery('#ascent').text( numberWithCommas(stats.elevation_gain) )
+            jQuery('#descent').text( numberWithCommas(stats.elevation_loss) )
+            jQuery('#net-elevation').text( (stats.net_elevation > 0 ? '+' : '') + numberWithCommas(stats.net_elevation) )
+            jQuery('#start-mile').text(numberWithCommas(stats.start_mile) )
+            jQuery('#end-mile').text(numberWithCommas(stats.end_mile) )
         }
     });
     direction_radio.change(function(e){
@@ -172,7 +180,7 @@ var resizeMap = function(){
         jQuery(window).height()-jQuery('#app').outerHeight()
     );
 }
-var resizeMapDebounce = debounce(resizeMap,200);
+var resizeMapDebounce = debounce(resizeMap,500);
 
 function debounce(func, wait, immediate) {
     var timeout;
@@ -189,4 +197,7 @@ function debounce(func, wait, immediate) {
     };
 }
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 })();
