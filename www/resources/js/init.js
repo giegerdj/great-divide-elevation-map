@@ -91,8 +91,10 @@ jQuery(document).ready(function($) {
 
     $('#options-tab input[name="show-official-gpx"]').change(function(){
         if( $(this).is(':checked') ) {
+            ga('send', 'event', 'Control', 'Show Official GPX');
             showOfficialRoute();
         } else {
+            ga('send', 'event', 'Control', 'Hide Official GPX');
             hideOfficialRoute();
         }
 
@@ -171,7 +173,7 @@ function loadRoute(data) {
         } else {
             rm.setDirection(rm.REVERSE_DIRECTION);
         }
-
+        ga('send', 'event', 'Control', 'Toggle Direction');
     });
 }
 

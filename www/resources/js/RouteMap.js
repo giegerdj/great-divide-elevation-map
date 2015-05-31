@@ -257,6 +257,7 @@ RouteMap.prototype.createElevationProfile = function() {
 
 RouteMap.prototype.dragEnd = function() {
     var me = this;
+    ga('send', 'event', 'Map', 'Drag Marker');
 
     var start_index = this.start_snap.getClosestVertexIndex(),
         end_index = this.end_snap.getClosestVertexIndex();
