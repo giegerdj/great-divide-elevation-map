@@ -9,7 +9,17 @@
     <title>Tour Divide '15 Map</title>
     <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resources/css/style.css" rel="stylesheet">
-    
+    <style type="text/css">
+        .area {
+            /*
+            TODO:
+            Why does firefox fail to respect the clip if this style is
+             placed in an external stylesheet???
+            */
+            fill: #666;
+            clip-path: url(#clip);
+        }
+    </style>
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPqXQJCToReQSoyQdEIsPlFwMltXDJ6to&sensor=false&libraries=geometry"></script>
     
     <!--[if lt IE 9]>
