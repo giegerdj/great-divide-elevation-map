@@ -37,11 +37,6 @@ body,html {
     shape-rendering: crispEdges;
 }
 
-.area {
-    fill: #666;
-    clip-path: url(#clip);
-}
-
 #clip {
     border: solid 1px #000;
 }
