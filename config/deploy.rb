@@ -17,3 +17,8 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :copy_exclude, [".git/", ".gitignore", "/Capfile", "/config/"]
+
+set :keep_releases, 5
+
+after "deploy:update", "deploy:cleanup"
+
