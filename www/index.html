@@ -51,10 +51,7 @@
                                 <a href="#options-tab" aria-controls="options-tab" role="tab" data-toggle="tab">Route Options</a>
                             </li>
                             <li role="presentation" class="active">
-                                <a href="#elevation-tab" aria-controls="elevation-tab" role="tab" data-toggle="tab">Elevation Profile</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#stats-tab" aria-controls="stats-tab" role="tab" data-toggle="tab">Segment Stats</a>
+                                <a href="#profile-tab" aria-controls="profile-tab" role="tab" data-toggle="tab">Profile + Stats</a>
                             </li>
                             <li role="presentation">
                                 <a href="#disclaimer-tab" aria-controls="disclaimer-tab" role="tab" data-toggle="tab">Disclaimer</a>
@@ -86,7 +83,7 @@
                                                 <div class="radio disabled">
                                                     <label>
                                                         <input type="radio" name="track" id="gdmbr-track" value="gdmbr" disabled>
-                                                        GDMBR 2015 (coming soon) - use <a href="http://eatsleepridegreatdivide.com">2011 version</a>.
+                                                        GDMBR - use <a href="http://eatsleepridegreatdivide.com">2011 version</a>.
                                                     </label>
                                                 </div>
                                             </div>
@@ -99,13 +96,13 @@
 
                                                 <div class="radio">
                                                     <label>
-                                                        <input type="radio" name="direction" id="southbound-direction" value="standard" checked>
+                                                        <input type="radio" name="direction" id="forward-direction" value="forward" checked>
                                                         Southbound
                                                     </label>
                                                 </div>
                                                 <div class="radio">
                                                     <label>
-                                                        <input type="radio" name="direction" id="northbound-direction" value="reverse">
+                                                        <input type="radio" name="direction" id="reverse-direction" value="reverse">
                                                         Northbound
                                                     </label>
                                                 </div>
@@ -115,23 +112,25 @@
                                 </div>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane active" id="elevation-tab">
-                                <svg id="elevation-profile"></svg>
-                            </div>
+                            <div role="tabpanel" class="tab-pane active" id="profile-tab">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div id="segment-stats-container">Loading...</div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <svg id="elevation-profile"></svg>
+                                        </div>
 
-                            <div role="tabpanel" class="tab-pane" id="stats-tab">
-                                <p>
-                                    <strong>Distance:</strong> <span id="distance"></span> mi.<br />
-                                    <strong>Ascent:</strong> <span id="ascent"></span> ft.<br />
-                                    <strong>Descent:</strong> <span id="descent"></span> ft.<br />
-                                    <strong>Net Elevation:</strong> <span id="net-elevation"></span> ft.<br />
-                                    <strong>Miles:</strong> <span id="start-mile"></span> - <span id="end-mile"></span>
-                                </p>
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="disclaimer-tab" style="overflow-x:hidden; overflow-y:scroll;">
                                 <p>
-                                    <strong>Last Update: May 29, 2015</strong>
+                                    <strong>Last Update: March 11, 2017</strong>
                                 </p>
                                 <p>
                                     <strong>Source</strong><br />
@@ -197,13 +196,34 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+    <script id="segment-stats-template" type="text/x-handlebars-template">
+        <ul class="list-unstyled">
+            <li>
+                <strong>Distance:</strong> {{stats.distance}} mi
+            </li>
+            <li>
+                <strong>Ascent:</strong> {{stats.ascent}} ft
+            </li>
+            <li>
+                <strong>Descent:</strong> {{stats.descent}} ft
+            </li>
+            <li>
+                <strong>Net Elevation:</strong> {{stats.netElevation}} ft
+            </li>
+            <li>
+                <strong>Route Miles:</strong> {{stats.startMile}} - {{stats.endMile}}
+            </li>
+        </ul>
+    </script>
     <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/jStorage/jstorage.min.js"></script>
+    <script src="/components/handlebars/handlebars.min.js"></script>
     <script src="/resources/js/SnapToRoute.js"></script>
     <script src="/components/d3/d3.min.js"></script>
+    <script src="/resources/js/Distance.js"></script>
+    <script src="/resources/js/ElevationProfile.js"></script>
     <script src="/resources/js/RouteMap.js"></script>
-    <script src="/resources/js/init.js"></script>
-    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/resources/js/GreatDivideProfiler.js"></script>
 </body>
 </html>
