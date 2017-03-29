@@ -20,7 +20,7 @@
             clip-path: url(#clip);
         }
     </style>
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPqXQJCToReQSoyQdEIsPlFwMltXDJ6to&sensor=false&libraries=geometry"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPqXQJCToReQSoyQdEIsPlFwMltXDJ6to&libraries=geometry"></script>
     
     <!--[if lt IE 9]>
     <script src="/components/html5shiv/dist/html5shiv.min.js"></script>
@@ -53,10 +53,10 @@
                             <li role="presentation" class="active">
                                 <a href="#profile-tab" aria-controls="profile-tab" role="tab" data-toggle="tab">Profile + Stats</a>
                             </li>
-                            <li role="presentation">
+                            <li role="presentation" class="hidden-xs">
                                 <a href="#disclaimer-tab" aria-controls="disclaimer-tab" role="tab" data-toggle="tab">Disclaimer</a>
                             </li>
-                            <li role="presentation" class="pull-right">
+                            <li role="presentation" class="hidden-xs pull-right">
                                 <a href="#github-tab" aria-controls="github-tab" role="tab" data-toggle="tab">Contribute on Github</a>
                             </li>
                         </ul>
@@ -130,7 +130,7 @@
 
                             <div role="tabpanel" class="tab-pane" id="disclaimer-tab" style="overflow-x:hidden; overflow-y:scroll;">
                                 <p>
-                                    <strong>Last Update: March 11, 2017</strong>
+                                    <strong>Last Update: March 2017</strong>
                                 </p>
                                 <p>
                                     <strong>Source</strong><br />
@@ -211,7 +211,7 @@
                 <strong>Net Elevation:</strong> {{stats.netElevation}} ft
             </li>
             <li>
-                <strong>Route Miles:</strong> {{stats.startMile}} - {{stats.endMile}}
+                <strong>Miles:</strong> {{stats.startMile}} - {{stats.endMile}}
             </li>
         </ul>
     </script>

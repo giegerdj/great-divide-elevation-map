@@ -63,14 +63,9 @@ var ElevationProfile = (function( $ ) {
             .range([0, profile.width]);
 
 
-        //TODO: refactor into helper
-        var minElevation = d3.min(profile.data.forward, function(d) {
-            return d.elevation;
-        });
+        var minElevation = _minElevation(profile.data.forward);
+        var maxElevation = _maxElevation(profile.data.forward);
 
-        var maxElevation = d3.max(profile.data.forward, function(d) {
-            return d.elevation;
-        });
         profile.y = d3.scale.linear()
             .domain([
                 Math.floor(minElevation/1000)*1000,
@@ -156,6 +151,113 @@ var ElevationProfile = (function( $ ) {
 
     }
 
+    var filterProfile = function(startIndex, endIndex){
+        // console.log('filterProfile', startIndex, endIndex);
+        var isForward = (startIndex < endIndex);
+
+        var filteredData,
+            stats = {
+                startMile: 0,
+                endMile: 0,
+                startElevationFeet: 0,
+                endElevationFeet: 0,
+                elevationGainFeet: 0,
+                elevationLossFeet: 0,
+            };
+
+        var startMile = 0,
+            endMile = 0,
+            startElevation = 0,
+            endElevation = 0;
+
+        if(isForward) {
+            //forward
+            startMile = profile.data.forward[startIndex].distance;
+            endMile = profile.data.forward[endIndex].distance;
+
+            startElevation = profile.data.forward[startIndex].elevation;
+            endElevation = profile.data.forward[endIndex].elevation;
+
+            filteredData = profile.data.forward.slice(startIndex, endIndex+1);
+        } else {
+            //reverse
+            var reverseStartIndex = profile.data.forward.length -1 - startIndex,
+                reverseEndIndex = profile.data.forward.length -1 - endIndex;
+
+            startMile = profile.data.reverse[reverseStartIndex].distance;
+            endMile = profile.data.reverse[reverseEndIndex].distance;
+
+            startElevation = profile.data.reverse[reverseStartIndex].elevation;
+            endElevation = profile.data.reverse[reverseEndIndex].elevation;
+
+            filteredData = profile.data.reverse.slice(reverseStartIndex, reverseEndIndex+1);
+        }
+
+        stats.startMile = startMile;
+        stats.endMile = endMile;
+        stats.startElevationFeet = startElevation;
+        stats.endElevationFeet = endElevation;
+
+
+        //this controls which miles of the route are shown
+        profile.x.domain([startMile, endMile ]);
+        profile.xRelative.domain([0, (endMile - startMile) ]);
+
+        var prevElevation = filteredData[0].elevation;
+        var prevDistance = filteredData[0].distance;
+        for(var j=1; j < filteredData.length; j++) {
+            var deltaElevationFt = filteredData[j].elevation - prevElevation;
+            var deltaDistanceMi = filteredData[j].distance - prevDistance;
+
+            var deltaDistanceFeet = Distance.fromMiles(deltaDistanceMi).toFeet();
+
+            var grade = deltaElevationFt/deltaDistanceFeet;
+
+            if( Math.abs(grade) > GRADE_LIMIT && deltaDistanceFeet >= 25) {
+
+                // console.log('delta dist (mi): ' + deltaDistanceMi);
+                // console.log('delta elev: ' + deltaElevationFt);
+                // console.log('grade: ' + grade);
+                // console.log('---')
+
+                if (deltaElevationFt > 0) {
+                    stats.elevationGainFeet += deltaElevationFt;
+                } else {
+                    stats.elevationLossFeet += deltaElevationFt;
+                }
+            }
+
+            prevElevation = filteredData[j].elevation;
+            prevDistance = filteredData[j].distance;
+        }
+
+        var minElevation = _minElevation(filteredData);
+        var maxElevation = _maxElevation(profile.data.forward);
+
+        profile.y.domain([
+            Math.floor(minElevation/1000)*1000,
+            Math.ceil(maxElevation/1000)*1000]
+        );
+
+        profile.svg.selectAll('g .x.axis.top')
+            .call(profile.xAxisTop);
+
+        profile.svg.selectAll('g .x.axis.bottom')
+            .call(profile.xAxisBottom.tickSize(-1 * profile.height));
+
+        profile.svg.select('.y.axis.right')
+            .call(profile.yAxisRight);
+
+        profile.svg.select('.y.axis.left')
+            .call(profile.yAxisLeft);
+
+        profile.svg.select('.area')
+            .datum(filteredData)
+            .attr('d', profile.area);
+
+        segmentStats = stats;
+    }
+
     var _resizeElevationProfile = function() {
         // console.log('_resizeElevationProfile');
         var dimensions = _getProfileDimensions();
@@ -214,119 +316,20 @@ var ElevationProfile = (function( $ ) {
         return dimensions;
     }
 
-    var getSegmentStats = function(){
-        return segmentStats;
+    var _minElevation = function(data) {
+        return d3.min(data, function(d) {
+            return d.elevation;
+        });
     }
 
-    var filterProfile = function(startIndex, endIndex){
-        // console.log('filterProfile', startIndex, endIndex);
-        var isForward = (startIndex < endIndex);
-
-        var filteredData,
-            stats = {
-                startMile: 0,
-                endMile: 0,
-                startElevationFeet: 0,
-                endElevationFeet: 0,
-                elevationGainFeet: 0,
-                elevationLossFeet: 0,
-            };
-
-        var startMile = 0,
-            endMile = 0,
-            startElevation = 0,
-            endElevation = 0;
-
-        if(isForward) {
-            //forward
-            startMile = profile.data.forward[startIndex].distance;
-            endMile = profile.data.forward[endIndex].distance;
-
-            startElevation = profile.data.forward[startIndex].elevation;
-            endElevation = profile.data.forward[endIndex].elevation;
-
-            filteredData = profile.data.forward.slice(startIndex, endIndex+1);
-        } else {
-            //reverse
-            var reverseStartIndex = profile.data.forward.length -1 - startIndex,
-               reverseEndIndex = profile.data.forward.length -1 - endIndex;
-
-            startMile = profile.data.reverse[reverseStartIndex].distance;
-            endMile = profile.data.reverse[reverseEndIndex].distance;
-
-            startElevation = profile.data.reverse[reverseStartIndex].elevation;
-            endElevation = profile.data.reverse[reverseEndIndex].elevation;
-
-            filteredData = profile.data.reverse.slice(reverseStartIndex, reverseEndIndex+1);
-        }
-
-        stats.startMile = startMile;
-        stats.endMile = endMile;
-        stats.startElevationFeet = startElevation;
-        stats.endElevationFeet = endElevation;
-
-
-        //this controls which miles of the route are shown
-        profile.x.domain([startMile, endMile ]);
-        profile.xRelative.domain([0, (endMile - startMile) ]);
-
-        var prevElevation = filteredData[0].elevation;
-        var prevDistance = filteredData[0].distance;
-        for(var j=1; j < filteredData.length; j++) {
-            var deltaElevationFt = filteredData[j].elevation - prevElevation;
-            var deltaDistanceMi = filteredData[j].distance - prevDistance;
-
-            var deltaDistanceFeet = Distance.fromMiles(deltaDistanceMi).toFeet();
-
-            var grade = deltaElevationFt/deltaDistanceFeet;
-
-            if( Math.abs(grade) > GRADE_LIMIT && deltaDistanceFeet >= 25) {
-
-                // console.log('delta dist (mi): ' + deltaDistanceMi);
-                // console.log('delta elev: ' + deltaElevationFt);
-                // console.log('grade: ' + grade);
-                // console.log('---')
-
-                if (deltaElevationFt > 0) {
-                    stats.elevationGainFeet += deltaElevationFt;
-                } else {
-                    stats.elevationLossFeet += deltaElevationFt;
-                }
-            }
-
-            prevElevation = filteredData[j].elevation;
-            prevDistance = filteredData[j].distance;
-        }
-
-        var minElevation = d3.min(filteredData, function(d) {
+    var _maxElevation = function(data) {
+        return d3.max(data, function(d) {
             return d.elevation;
         });
-        var maxElevation = d3.max(filteredData, function(d) {
-            return d.elevation;
-        });
+    }
 
-        profile.y.domain([
-            Math.floor(minElevation/1000)*1000,
-            Math.ceil(maxElevation/1000)*1000]
-        );
-
-        profile.svg.selectAll('g .x.axis.top')
-            .call(profile.xAxisTop);
-
-        profile.svg.selectAll('g .x.axis.bottom')
-            .call(profile.xAxisBottom.tickSize(-1 * profile.height));
-
-        profile.svg.select('.y.axis.right')
-            .call(profile.yAxisRight);
-
-        profile.svg.select('.y.axis.left')
-            .call(profile.yAxisLeft);
-
-        profile.svg.select('.area')
-            .datum(filteredData)
-            .attr('d', profile.area);
-
-        segmentStats = stats;
+    var getSegmentStats = function(){
+        return segmentStats;
     }
 
     Construct.prototype = {

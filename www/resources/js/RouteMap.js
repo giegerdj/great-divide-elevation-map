@@ -90,6 +90,8 @@ var RouteMap = (function( $ ) {
 
         setTimeout(function(){
             _placeMarkers();
+            _filterProfile();
+            updateCallback(self.RouteMap.prototype);
         }, 200);
     }
 
@@ -179,6 +181,10 @@ var RouteMap = (function( $ ) {
     }
 
     var _filterProfile = function(startIndex, endIndex) {
+
+        startIndex = startIndex || markers.startMarkerIndex;
+        endIndex = endIndex || markers.endMarkerIndex;
+
         _setIsReverse( (startIndex > endIndex) );
 
         //update elevation profile
