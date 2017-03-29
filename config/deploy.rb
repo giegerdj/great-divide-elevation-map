@@ -1,7 +1,7 @@
 set :application, "td-2015-map"
 
 set :scp, :git
-set :repository, "git@github.com:giegerdj/td-2015-map.git"
+set :repository, "git@github.com:giegerdj/tour-divide-map.git"
 
 require "capistrano/ext/multistage"
 set :stages, ["staging","production"]
