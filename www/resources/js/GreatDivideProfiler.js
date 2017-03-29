@@ -139,6 +139,11 @@ var GreatDivideProfiler = (function( $ ) {
     var _bind = function() {
         $(document).ready(function(){
             $(directionRadio).change(function(e){
+
+                if(typeof ga === 'function') {
+                    ga('send', 'event', 'Control', 'Toggle Direction');
+                }
+
                 if( $(this).val() == 'forward' ) {
                     routeMap.setDirection(routeMap.FORWARD_DIRECTION);
                 } else {
@@ -160,6 +165,10 @@ var GreatDivideProfiler = (function( $ ) {
 
     var _showOfficialTDRoute = function() {
         // console.log('showOfficialTDRoute');
+
+        if(typeof ga === 'function') {
+            ga('send', 'event', 'Control', 'Show Official GPX');
+        }
 
         if( typeof officialTDRoute == 'object' ) {
             officialTDRoute.setMap(routeMap.getMap());
@@ -193,6 +202,10 @@ var GreatDivideProfiler = (function( $ ) {
     }
 
     var _hideOfficialTDRoute = function() {
+        if(typeof ga === 'function') {
+            ga('send', 'event', 'Control', 'Hide Official GPX');
+        }
+
         //edge case: checkbox toggled back prior to the load ajax completing
         if(typeof officialTDRoute != 'undefined') {
             officialTDRoute.setMap(null);

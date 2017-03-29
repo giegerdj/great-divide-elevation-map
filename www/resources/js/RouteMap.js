@@ -118,11 +118,11 @@ var RouteMap = (function( $ ) {
         snaps.startSnap = new SnapToRoute(map, markers.startMarker, route);
 
         google.maps.event.addListener(markers.startMarker, 'dragend', function(e){
-            _dragEnd('A');
+            _dragEnd('A', false);
         });
 
         google.maps.event.addListener(markers.endMarker, 'dragend', function(e){
-            _dragEnd('B');
+            _dragEnd('B', false);
         });
 
     }
@@ -160,8 +160,10 @@ var RouteMap = (function( $ ) {
         return isReverse;
     }
 
-    var _dragEnd = function(pos) {
+    var _dragEnd = function(pos, triggerGoogleAnalytics) {
         // console.log('_dragEnd');
+
+        triggerGoogleAnalytics = (typeof triggerGoogleAnalytics === 'undefined') ? true : triggerGoogleAnalytics;
 
         if(pos == 'A') {
             _setMarkerPosition('A', snaps.startSnap.getClosestVertexIndex());
@@ -172,6 +174,10 @@ var RouteMap = (function( $ ) {
         if(markers.startMarkerIndex == markers.endMarkerIndex) {
             alert('No distance selected.  Spread out the markers.');
             return;
+        }
+
+        if(typeof ga === 'function' && triggerGoogleAnalytics) {
+            ga('send', 'event', 'Map', 'Drag Marker');
         }
 
         _filterProfile(markers.startMarkerIndex, markers.endMarkerIndex)
