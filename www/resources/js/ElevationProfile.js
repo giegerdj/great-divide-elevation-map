@@ -232,7 +232,7 @@ var ElevationProfile = (function( $ ) {
         }
 
         var minElevation = _minElevation(filteredData);
-        var maxElevation = _maxElevation(profile.data.forward);
+        var maxElevation = _maxElevation(filteredData);
 
         profile.y.domain([
             Math.floor(minElevation/1000)*1000,
