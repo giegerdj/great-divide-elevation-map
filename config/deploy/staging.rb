@@ -4,7 +4,7 @@ role :db, "s.davegieger.com", :primary => true
 
 set :deploy_to, "/var/www/html/staging/td-2015-map/"
 
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "staging_deploy_dsa")]
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "staging_deploy_rsa")]
 
 set :branch, "develop"
 
