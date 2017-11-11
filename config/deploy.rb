@@ -26,7 +26,9 @@ set :keep_releases, 10
 
 after "deploy:setup",
         "ep:setup",
+        "ep:config"
         "laravel:setup"
+
 
 #this happens before the 'current' symlink is changed to the newest release
 before "deploy:create_symlink",
