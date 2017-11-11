@@ -35,7 +35,7 @@ before "deploy:create_symlink",
         "ep:symlinks",
         "laravel:symlinks",
         "laravel:file_permissions",
-        "ep:composer"
+        "ep:finalize"
 
 #this happens after the 'current' symlink is changed to the proper release
 #in a normal deploy AND rollback
@@ -108,8 +108,8 @@ EOF
         run_locally("git checkout #{branch} && gulp --production")
         upload("public/build", "#{release_path}/public/", :via => :scp, :recursive => true, :roles => :web)
 
-        run "if $(php #{release_path}/artisan migrate:status | grep --quiet 'No migrations found'); then php #{release_path}/artisan migrate:install; fi"
-        run "php #{release_path}/artisan migrate --force"
+        # run "if $(php #{release_path}/artisan migrate:status | grep --quiet 'No migrations found'); then php #{release_path}/artisan migrate:install; fi"
+        # run "php #{release_path}/artisan migrate --force"
     end
 
 end
