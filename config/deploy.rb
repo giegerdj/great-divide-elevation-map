@@ -26,15 +26,16 @@ set :keep_releases, 10
 
 after "deploy:setup",
         "ep:setup",
+        "laravel:setup",
         "ep:config"
-        "laravel:setup"
 
 
 #this happens before the 'current' symlink is changed to the newest release
 before "deploy:create_symlink",
         "ep:symlinks",
         "laravel:symlinks",
-        "laravel:file_permissions"
+        "laravel:file_permissions",
+        "ep:composer"
 
 #this happens after the 'current' symlink is changed to the proper release
 #in a normal deploy AND rollback
