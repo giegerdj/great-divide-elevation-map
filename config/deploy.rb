@@ -35,7 +35,7 @@ before "deploy:create_symlink",
         "ep:symlinks",
         "laravel:symlinks",
         "laravel:file_permissions",
-        "ep:composer"
+        "ep:finalize"
 
 #this happens after the 'current' symlink is changed to the proper release
 #in a normal deploy AND rollback
