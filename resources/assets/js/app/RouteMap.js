@@ -32,7 +32,7 @@ var RouteMap = (function( $ ) {
     }
 
     var setRouteData = function( routeData ) {
-        console.log('RouteMap::setRouteData');
+        // console.log('RouteMap::setRouteData');
         routeCoordinates = [];
         routePolyline = new google.maps.Polyline({
             strokeColor: '#770000',
@@ -117,7 +117,7 @@ var RouteMap = (function( $ ) {
     }
 
     var setDirection = function(direction) {
-        console.log('RouteMap::setDirection');
+        // console.log('RouteMap::setDirection');
 
         if(!( (direction == FORWARD_DIRECTION && markers.startMarkerIndex > markers.endMarkerIndex) ||
             (direction == REVERSE_DIRECTION && markers.startMarkerIndex < markers.endMarkerIndex)  )) {
@@ -197,7 +197,7 @@ var RouteMap = (function( $ ) {
     }
 
     var reset = function() {
-        console.log('RouteMap::reset');
+        // console.log('RouteMap::reset');
         if(markers.startMarker) {
             markers.startMarker.setMap(null);
         }
@@ -213,6 +213,10 @@ var RouteMap = (function( $ ) {
 
     }
 
+    var resizeElevationProfile = function(){
+        elevationProfile.resizeElevationProfile();
+    }
+
     Construct.prototype = {
         constructor: RouteMap,
         reset: reset,
@@ -220,6 +224,7 @@ var RouteMap = (function( $ ) {
         setRouteData: setRouteData,
         assertIsReverse: assertIsReverse,
         getSegmentStats: getSegmentStats,
+        resizeElevationProfile: resizeElevationProfile,
         FORWARD_DIRECTION: FORWARD_DIRECTION,
         REVERSE_DIRECTION: REVERSE_DIRECTION
     };

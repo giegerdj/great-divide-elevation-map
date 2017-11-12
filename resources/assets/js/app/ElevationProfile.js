@@ -30,7 +30,7 @@ var ElevationProfile = (function( $ ) {
     var GRADE_LIMIT = .010;
 
     var Construct = function( config ) {
-        console.log('ElevationProfile::Construct');
+        // console.log('ElevationProfile::Construct');
         profile.elementId = config.profileContainerId;
         profile.container = d3.select(config.profileContainerId);
         var id = '#' + profile.container.attr('id');
@@ -39,7 +39,7 @@ var ElevationProfile = (function( $ ) {
     }
 
     var setData = function(data) {
-        console.log('ElevationProfile::setData')
+        // console.log('ElevationProfile::setData')
         profile.data = {
             forward: data.forward,
             reverse: data.reverse
@@ -53,7 +53,7 @@ var ElevationProfile = (function( $ ) {
 
     //other stuff
     var _setupChart = function(){
-        console.log('ElevationProfile::_setupChart')
+        // console.log('ElevationProfile::_setupChart')
 
         //reset chart
         d3.selectAll('svg > *').remove();
@@ -159,12 +159,12 @@ var ElevationProfile = (function( $ ) {
             .attr('d', profile.area);
 
         //TODO: figure out debounce issues
-        window.addEventListener('resize', _resizeElevationProfile);
+        window.addEventListener('resize', resizeElevationProfile);
 
     }
 
     var filterProfile = function(startIndex, endIndex){
-        console.log('ElevationProfile::filterProfile')
+        // console.log('ElevationProfile::filterProfile')
         var isForward = (startIndex < endIndex);
 
         var filteredData,
@@ -265,8 +265,8 @@ var ElevationProfile = (function( $ ) {
         segmentStats = stats;
     }
 
-    var _resizeElevationProfile = function() {
-        console.log('ElevationProfile::_resizeElevationProfile')
+    var resizeElevationProfile = function() {
+        // console.log('ElevationProfile::resizeElevationProfile')
         var dimensions = _getProfileDimensions();
 
         profile.width = dimensions.width;
@@ -303,7 +303,7 @@ var ElevationProfile = (function( $ ) {
     }
 
     var _getProfileDimensions = function(){
-        console.log('ElevationProfile::_getProfileDimensions')
+        // console.log('ElevationProfile::_getProfileDimensions')
         var dimensions = {};
 
         profile.parent
@@ -337,13 +337,14 @@ var ElevationProfile = (function( $ ) {
     }
 
     var getSegmentStats = function(){
-        console.log('ElevationProfile::getSegmentStats')
+        // console.log('ElevationProfile::getSegmentStats')
         return segmentStats;
     }
 
     Construct.prototype = {
         constructor: ElevationProfile,
         filterProfile: filterProfile,
+        resizeElevationProfile: resizeElevationProfile,
         setData: setData,
         getSegmentStats: getSegmentStats
     };

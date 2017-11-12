@@ -27,8 +27,8 @@
                             <li role="presentation" class="active">
                                 <a href="#profile-tab" aria-controls="profile-tab" role="tab" data-toggle="tab">Profile + Stats</a>
                             </li>
-                            <li role="presentation" class="hidden-xs">
-                                <a href="#disclaimer-tab" aria-controls="disclaimer-tab" role="tab" data-toggle="tab">Disclaimer</a>
+                            <li role="presentation">
+                                <a href="#map-options-tab" aria-controls="map-options-tab" role="tab" data-toggle="tab">Map Options</a>
                             </li>
                             <li class="pull-right" class="">
                                 <form class="form-inline">
@@ -58,52 +58,59 @@
                             <div role="tabpanel" class="tab-pane active" id="profile-tab">
                                 <div class="container-fluid">
                                     <div class="row">
-                                        <div class="col-sm-2">
-                                            <div id="segment-stats-container">Loading...</div>
-                                            <form>
+                                        <div class="col-sm-3 col-lg-2">
+                                            <div class="form">
                                                 <div class="form-group">
-                                                    <form>
-                                                        <select name="direction" class="form-control">
-                                                            <option value="">Choose Direction</option>
-                                                            <option value="forward" selected>Southbound</option>
-                                                            <option value="reverse">Northbound</option>
-                                                        </select>
-                                                    </form>
+                                                    <select name="direction" class="form-control">
+                                                        <option value="">Choose Direction</option>
+                                                        <option value="forward" selected>Southbound</option>
+                                                        <option value="reverse">Northbound</option>
+                                                    </select>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div id="segment-stats-container">Loading...</div>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-9 col-lg-10">
                                             <svg id="elevation-profile"></svg>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="disclaimer-tab" style="overflow-x:hidden; overflow-y:scroll;">
-                                <p>
-                                    <strong>Last Update: November 2017</strong>
-                                </p>
-                                <p>
-                                    <strong>Source</strong><br />
-                                    Data was stitched together from various sources - gps records
-                                    from <a href="https://app.strava.com" target="_blank">Strava</a> activities and
-                                    the <a href="http://topofusion.com/divide/gps.php" target="_blank">official TD GPX tracks</a>.
-                                </p>
-                                <p>
-                                    <strong>Accuracy</strong><br />
-                                    Is the mileage 100% accurate? No, but it is close.  GPS error is unavoidable.<br />
-                                    Is the elevation profile 100% accurate? No, but it is close enough to compare
-                                    efforts between resupplies.<br />
-                                    Elevation gain/loss is calculated where the grade between points is greater than 1.5%.  A naive, but
-                                    simple approach.
-                                </p>
-                                <p>
-                                    <strong>Navigation</strong><br />
-                                    Don't rely on this map for the purpose of navigation.  Buy the
-                                    <a href="http://adventurecycling.org/routes-and-maps/adventure-cycling-route-network/great-divide-mountain-bike-route/" target="_blank">
-                                        Official Adventure Cycling GDMBR map set
-                                    </a> instead.
-                                </p>
+                            <div role="tabpanel" class="tab-pane" id="map-options-tab">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">
+                                                        Units
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <select name="direction" class="form-control disabled" disabled="disabled">
+                                                            <option value="imperial" selected>Feet/Miles</option>
+                                                            <option value="metric">Meters/Kilometers</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">
+                                                        Grade Limit
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <select name="direction" class="form-control disabled" disabled="disabled">
+                                                        @for ($i = 0; $i < 10; $i+=0.5)
+                                                            <option value="{{ $i }}" {{$i == 1 ? 'selected' : ''}}>{{$i}}%</option>
+                                                        @endfor
+                                                        </select>
+                                                        <p class="help-block">The grade at which elevation changes add to the total gain/loss</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,23 +143,25 @@
     </div>
 
     <script id="segment-stats-template" type="text/x-handlebars-template">
-        <ul class="list-unstyled">
-            <li>
-                <strong>Distance:</strong> @{{stats.distance}} mi
-            </li>
-            <li>
-                <strong>Ascent:</strong> @{{stats.ascent}} ft
-            </li>
-            <li>
-                <strong>Descent:</strong> @{{stats.descent}} ft
-            </li>
-            <li>
-                <strong>Net Elevation:</strong> @{{stats.netElevation}} ft
-            </li>
-            <li>
-                <strong>Miles:</strong> @{{stats.startMile}} - @{{stats.endMile}}
-            </li>
-        </ul>
+        <div class="form-horizontal">
+
+        </div>
+        <dl class="dl-horizontal">
+            <dt>Distance</dt>
+            <dd>@{{stats.distance}} mi</dd>
+
+            <dt>Ascent</dt>
+            <dd>@{{stats.ascent}} ft</dd>
+
+            <dt>Descent</dt>
+            <dd>@{{stats.descent}} ft</dd>
+
+            <dt>Net Elevation</dt>
+            <dd>@{{stats.netElevation}} ft</dd>
+
+            <dt>Miles</dt>
+            <dd>@{{stats.startMile}} - @{{stats.endMile}}</dd>
+        </dl>
     </script>
 
     <script>

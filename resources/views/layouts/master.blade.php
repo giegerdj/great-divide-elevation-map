@@ -13,7 +13,6 @@
     @show
 
     <title></title>
-    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ elixir('assets/css/style.css') }}" rel="stylesheet">
     @yield('header-includes')
 

@@ -11,7 +11,7 @@ var App = (function( $ ) {
         googleMap;
 
     var init = function(appConfig) {
-        console.log('App::init');
+        // console.log('App::init');
 
         for (var groupName in appConfig.routeGroups) {
             if (!appConfig.routeGroups.hasOwnProperty(groupName)) {
@@ -32,7 +32,7 @@ var App = (function( $ ) {
     }
 
     var _initGoogleMap = function() {
-        console.log('App::_initGoogleMap')
+        // console.log('App::_initGoogleMap')
         var mapOptions = {
             zoomControl: true,
             zoomControlOptions: {
@@ -58,14 +58,14 @@ var App = (function( $ ) {
     }
 
     var _resizeMap = function() {
-        console.log('App::_resizeMap');
+        // console.log('App::_resizeMap');
         $('#map').height(
-            $(window).height()-$('#app').outerHeight()
+            $(window).height() - $('#app').outerHeight() - $('#top-nav').height()
         );
     }
 
     var _createRouteMap = function() {
-        console.log('App::_createRouteMap')
+        // console.log('App::_createRouteMap')
         var routeOptions = {
             profileContainerId: '#elevation-profile',
             map: googleMap,
@@ -123,7 +123,7 @@ var App = (function( $ ) {
     }
 
     var _selectRoute = function(selectedRouteId, resetMap) {
-        console.log('App::_selectRoute')
+        // console.log('App::_selectRoute')
         if(selectedRouteId == '' || selectedRouteId == currentRouteId) {
             return;
         }
@@ -195,6 +195,11 @@ var App = (function( $ ) {
                 var selectedRouteId = $(this).val();
                 _selectRoute(selectedRouteId, true);
 
+            });
+
+            $('#app .nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+                _resizeMap();
+                routeMap.resizeElevationProfile();
             })
         });
 
