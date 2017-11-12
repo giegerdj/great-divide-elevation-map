@@ -20,7 +20,6 @@
     <script src="/components/html5shiv/dist/html5shiv.min.js"></script>
     <script src="/components/respond/dest/respond.min.js"></script>
     <![endif]-->
-    {{--
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -30,7 +29,6 @@
         ga('create', 'UA-8215888-11', 'auto');
         ga('send', 'pageview');
     </script>
-    --}}
 
 </head>
 <body>
