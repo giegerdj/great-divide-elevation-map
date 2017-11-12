@@ -1,7 +1,7 @@
-set :application, "td-2015-map"
+set :application, "Great Divide Elevation Map"
 
 set :scp, :git
-set :repository, "git@github.com:giegerdj/tour-divide-map.git"
+set :repository, "git@github.com:giegerdj/great-divide-elevation-map.git"
 
 require "capistrano/ext/multistage"
 set :stages, ["staging","production"]
