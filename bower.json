@@ -1,7 +1,7 @@
 {
-  "name": "td-2015-map",
+  "name": "great-divide-elevation-map",
   "version": "0.1.0",
-  "homepage": "td-2015.eatsleepridegreatdivide.com",
+  "homepage": "https://www.eatsleepridegreatdivide.com",
   "authors": [
     "Dave Gieger <dave@giegertechnology.com>"
   ],
@@ -9,16 +9,15 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "www/components",
+    "public/components",
     "test",
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.4",
+    "bootstrap": "~3.3.7",
     "d3": "~3.5.5",
     "respond": "~1.4.2",
     "html5shiv": "~3.7.2",
-    "jStorage": "~0.4.12",
     "handlebars": "^4.0.5"
   },
   "private": true
