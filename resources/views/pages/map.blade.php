@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('header-includes')
+    {{--
     <style type="text/css">
         .area {
             /*
@@ -12,6 +13,7 @@
             clip-path: url(#clip);
         }
     </style>
+    --}}
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCej-mrOPruKdNFs6FUoH-oyeWHH5t9TAA&libraries=geometry"></script>
 @endsection
 

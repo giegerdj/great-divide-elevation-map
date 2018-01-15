@@ -6,6 +6,7 @@ var ElevationProfile = (function( $ ) {
             forward: [],
             reverse: [],
         },
+        mouseLine: null,
         container: null,
         margin: {
             top: 20,
@@ -158,6 +159,88 @@ var ElevationProfile = (function( $ ) {
             .attr('class', 'area')
             .attr('d', profile.area);
 
+        profile.mouseLine = profile.svg.append("g")
+            .attr("class", "mouse-over-effects");
+
+        profile.mouseLine.append("path") // this is the black vertical line to follow mouse
+            .attr("class", "mouse-bar")
+            .style("stroke", "black")
+            .style("stroke-width", "0.5px")
+            .style("opacity", "0");
+
+        profile.infoBox = profile.svg.append('g')
+            .style("opacity", "0")
+            .attr('id', 'info-box');
+
+        profile.infoBox.append("rect")
+            .attr('y', '20');
+
+
+        profile.infoBox.append('text')
+            .attr('id', 'distance-text')
+            .attr('x', '10')
+            .attr('y', '40')
+
+        profile.infoBox.append('text')
+            .attr('id', 'elevation-text')
+            .attr('x', '10')
+            .attr('y', '60');
+        /*
+        profile.mouseLine.append('svg:rect') // append a rect to catch mouse movements on canvas
+            .attr('width', profile.width)    // can't catch mouse events on a g element
+            .attr('height', profile.height)
+            .attr('fill', 'none')
+            .attr('pointer-events', 'all')
+            .attr('id', 'mouse-event-rect')
+            .on('mouseout', function() { // on mouse out hide line, circles and text
+                d3.select(".mouse-bar")
+                    .style("opacity", "0");
+
+                profile.infoBox.style('opacity', '0');
+            })
+            .on('mouseover', function() { // on mouse in show line, circles and text
+                d3.select(".mouse-bar")
+                    .style("opacity", "1");
+
+                profile.infoBox.style('opacity', '1');
+            })
+            .on('mousemove', function() { // mouse moving over canvas
+                var mouse = d3.mouse(this);
+                d3.select(".mouse-bar")
+                    .attr("d", function() {
+                        var d = "M" + mouse[0] + "," + profile.height;
+                        d += " " + mouse[0] + "," + 0;
+                        return d;
+                    })
+                profile.infoBox.attr("transform", function(d, i) {
+                    // console.log(mouse, profile.width / mouse[0]);
+                    var routeMile = profile.x.invert(mouse[0]);
+                    // console.log(routeMile);
+                    var tmp = d3.select('path.area');
+                    var beginning = 0,
+                        end = tmp.node().getTotalLength(),
+                        target = null;
+
+                    while (true){
+                        target = Math.floor((beginning + end) / 2);
+                        pos = tmp.node().getPointAtLength(target);
+                        if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                            break;
+                        }
+                        if (pos.x > mouse[0])      end = target;
+                        else if (pos.x < mouse[0]) beginning = target;
+                        else break; //position found
+                    }
+
+                    d3.select('#distance-text').text(profile.y.invert(pos.y).toFixed(2));
+                    d3.select('#elevation-text').text(profile.x.invert(pos.x));
+
+                    return "translate(" + (mouse[0] + 10) + ", 0)";
+                });
+
+
+            });
+        */
         //TODO: figure out debounce issues
         window.addEventListener('resize', resizeElevationProfile);
 
@@ -299,6 +382,12 @@ var ElevationProfile = (function( $ ) {
 
         profile.svg.select('#clip-rect')
             .attr('width', profile.width)
+            .attr('height', profile.height);
+
+        //TODO: update mouse hover width/height
+
+        profile.mouseLine.select('#mouse-event-rect') // append a rect to catch mouse movements on canvas
+            .attr('width', profile.width) // can't catch mouse events on a g element
             .attr('height', profile.height);
     }
 

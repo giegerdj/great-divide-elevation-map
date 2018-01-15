@@ -35,33 +35,44 @@ dl {
 #elevation-profile {
   font: 10px sans-serif;
   width: 100%;
-}
 
-.axis {
-  path {
-    fill: none;
+  .area {
+    fill: #000;
+    opacity: 0.15;
+    clip-path: url(#clip);
+  }
+
+  .axis {
+    path {
+      fill: none;
+      shape-rendering: crispEdges;
+    }
+
+    &.x line,
+    &.y.left line {
+      shape-rendering: crispEdges;
+      stroke: #eee;
+    }
+
+  }
+
+  #clip {
+    border: solid 1px #000;
+  }
+
+  .brush .extent {
+    stroke: #fff;
+    fill-opacity: .125;
     shape-rendering: crispEdges;
   }
 
-  &.x line {
+  #info-box rect {
+    fill: #fff;
+    stroke-width: 1;
+    stroke: #aaa;
     shape-rendering: crispEdges;
-    stroke: #ccc;
+    width: 150px;
+    height: 60px;
   }
 
-  &.y.left line {
-    stroke-dasharray: 2,2;
-    shape-rendering: crispEdges;
-    stroke: #ccc;
-  }
-
-}
-
-#clip {
-  border: solid 1px #000;
-}
-
-.brush .extent {
-  stroke: #fff;
-  fill-opacity: .125;
-  shape-rendering: crispEdges;
 }
