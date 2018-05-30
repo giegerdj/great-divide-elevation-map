@@ -19,6 +19,10 @@ class PagesController extends Controller
                 ],
             ], 'Tour Divide' => [
                 [
+                    'id' => 'TD-2018v1',
+                    'gpxFile' => 'assets/route-gpx/TourDivide2018_v1.gpx',
+                    'routeDataFile' => 'assets/route-json/TourDivide2018_v1-route.json',
+                ],[
                     'id' => 'TD-2017v1',
                     'gpxFile' => 'assets/route-gpx/TourDivide2017_v1.gpx',
                     'routeDataFile' => 'assets/route-json/TourDivide2017_v1-route.json',
@@ -48,7 +52,7 @@ class PagesController extends Controller
 
         return view('pages.map')
             ->with('routeGroups', $routeGroups)
-            ->with('initialSelectedRouteId', 'TD-2017v1');
+            ->with('initialSelectedRouteId', 'TD-2018v1');
     }
 
     public function about() {
