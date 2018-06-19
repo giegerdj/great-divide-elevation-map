@@ -22,7 +22,7 @@ set :use_sudo, false
 
 set :copy_exclude, [".git/"]
 
-set :keep_releases, 10
+set :keep_releases, 5
 
 after "deploy:setup",
         "ep:setup",
