@@ -35,6 +35,7 @@ before "deploy:create_symlink",
         "ep:symlinks",
         "laravel:symlinks",
         "laravel:file_permissions",
+        "ep:htaccess",
         "ep:finalize"
 
 #this happens after the 'current' symlink is changed to the proper release
@@ -55,6 +56,18 @@ namespace :ep do
     desc "symlink custom files"
     task :symlinks, :roles => :app do
 
+    end
+
+    desc "Move the staging/production htaccess into place"
+    task :htaccess, :roles => :app do
+        if fetch(:stage) == :production
+          run "mv #{latest_release}/public/.htaccess.production #{latest_release}/public/.htaccess"
+        end
+        if fetch(:stage) == :staging
+          run "mv #{latest_release}/public/.htaccess.staging #{latest_release}/public/.htaccess"
+        end
+
+        run "rm -f #{latest_release}/public/.htaccess.*"
     end
 
     desc "Create config file"

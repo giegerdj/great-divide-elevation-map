@@ -5,6 +5,8 @@
 /public/assets/js/
 !/public/assets/js/.gitkeep
 
+/public/.htaccess
+
 /node_modules
 /public/storage
 /public/build
