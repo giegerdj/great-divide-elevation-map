@@ -9,7 +9,7 @@ set :stages, ["staging","production"]
 set :default_stage, "staging"
 
 set :ssh_options, {
-    :user =>  "www-data",
+    :user =>  "forge",
     :forward_agent => true
 }
 
@@ -43,7 +43,8 @@ before "deploy:create_symlink",
 after "deploy:restart",
         "laravel:cache_clear",
         "laravel:view_clear",
-        "laravel:config_cache"
+        "laravel:config_cache",
+        "sys:restart_php_fpm"
 
 after "deploy:update", "deploy:cleanup"
 
@@ -255,6 +256,11 @@ namespace :sys do
     task :upload_assets do
         run_locally("git checkout #{branch} && gulp --production")
         upload("public/build/", "#{current_path}/public/", :via => :scp, :recursive => true, :roles => :web)
+    end
+
+    desc "Reload php7.3-fpm"
+    task :restart_php_fpm, :roles => :app do
+        run "sudo systemctl restart php7.3-fpm.service"
     end
 
 

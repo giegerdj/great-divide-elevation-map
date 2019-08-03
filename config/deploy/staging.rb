@@ -1,10 +1,10 @@
-role :web, "s.davegieger.com"
-role :app, "s.davegieger.com"
-role :db, "s.davegieger.com", :primary => true
+# role :web, "forge-secondary.davegieger.com"
+# role :app, "forge-secondary.davegieger.com"
+# role :db, "forge-secondary.davegieger.com", :primary => true
 
-set :deploy_to, "/var/www/html/staging/great-divide-elevation-map/"
+# set :deploy_to, "/home/forge/staging.eatsleepridegreatdivide.com/"
 
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "staging_deploy_rsa")]
+# ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "staging_deploy_rsa")]
 
-set :branch, "develop"
+# set :branch, "develop"
 
