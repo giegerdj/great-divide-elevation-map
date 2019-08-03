@@ -223,12 +223,6 @@ namespace :laravel do
         run "php #{current_path}/artisan config:cache"
     end
 
-    desc "Optimize the framework for better performance"
-    task :optimize, :roles => :app do
-        run "php #{current_path}/artisan clear-compiled"
-        run "php #{current_path}/artisan optimize"
-    end
-
     desc "Remove the compiled class file"
     task :clear_compiled, :roles => :app do
         run "php #{current_path}/artisan clear-compiled"
