@@ -117,10 +117,11 @@ EOF
 
     desc "Touch up code before current symlink is changed"
     task :finalize, :roles => :app do
-        run "composer --working-dir=#{release_path} install --quiet"
+        run "composer --working-dir=#{release_path} install --no-dev --quiet --prefer-dist --optimize-autoloader"
 
-        run_locally("git checkout #{branch} && gulp --production")
-        upload("public/build", "#{release_path}/public/", :via => :scp, :recursive => true, :roles => :web)
+        run_locally("git checkout #{branch} && npm run production")
+        upload("public/mix-manifest.json", "#{release_path}/public/", :via => :scp, :roles => :web)
+        upload("public/assets/build", "#{release_path}/public/assets/", :via => :scp, :recursive => true, :roles => :web)
 
         # run "if $(php #{release_path}/artisan migrate:status | grep --quiet 'No migrations found'); then php #{release_path}/artisan migrate:install; fi"
         # run "php #{release_path}/artisan migrate --force"
@@ -244,12 +245,6 @@ namespace :sys do
     desc "Composer install"
     task :composer_install, :roles => :app do
         run "composer --working-dir=#{current_path} install"
-    end
-
-    desc "Compile and upload assets"
-    task :upload_assets do
-        run_locally("git checkout #{branch} && gulp --production")
-        upload("public/build/", "#{current_path}/public/", :via => :scp, :recursive => true, :roles => :web)
     end
 
     desc "Reload php7.3-fpm"

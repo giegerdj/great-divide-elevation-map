@@ -13,7 +13,7 @@
     @show
 
     <title></title>
-    <link href="{{ elixir('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ mix('assets/build/css/style.css') }}" rel="stylesheet">
     @yield('header-includes')
 
     <!--[if lt IE 9]>

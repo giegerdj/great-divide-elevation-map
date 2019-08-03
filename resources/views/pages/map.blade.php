@@ -176,5 +176,5 @@
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/handlebars/handlebars.min.js"></script>
     <script src="/components/d3/d3.min.js"></script>
-    <script src="{{ elixir('assets/js/app.js') }}"></script>
+    <script src="{{ mix('assets/build/js/app.js') }}"></script>
 @endsection
