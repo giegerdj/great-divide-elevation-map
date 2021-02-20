@@ -1,10 +1,10 @@
 <?php
 
-namespace EP\Console\Commands;
+namespace App\Console\Commands;
 
-use EP\Services\ParseTCX;
+use App\Services\ParseTCX;
 use Illuminate\Console\Command;
-use EP\Services\CreateElevationProfileData;
+use App\Services\CreateElevationProfileData;
 
 class TCXCreateProfileData extends Command
 {

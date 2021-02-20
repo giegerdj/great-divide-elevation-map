@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 var buildDir = 'public/assets/build/';
-var resourceDir = 'resources/assets/';
+var resourceDir = 'resources/';
 
 //compile these files and move them to the public dir
 mix.less(resourceDir + 'less/app/style.less', buildDir + 'css/style.css');

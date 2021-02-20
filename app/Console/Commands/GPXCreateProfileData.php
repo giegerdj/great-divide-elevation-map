@@ -1,10 +1,10 @@
 <?php
 
-namespace EP\Console\Commands;
+namespace App\Console\Commands;
 
-use EP\Services\ParseGPX;
+use App\Services\ParseGPX;
 use Illuminate\Console\Command;
-use EP\Services\CreateElevationProfileData;
+use App\Services\CreateElevationProfileData;
 
 class GPXCreateProfileData extends Command
 {

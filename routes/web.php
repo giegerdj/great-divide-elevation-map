@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', [
     'as' => 'pages.map',
     'uses' => 'PagesController@map'
