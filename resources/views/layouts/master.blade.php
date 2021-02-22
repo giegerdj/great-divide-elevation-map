@@ -27,7 +27,7 @@
     </script>
 
 </head>
-<body>
+<body class="{{ \App\Helpers\BodyClassHelper::bodyClass() }}">
     @include('partials.nav')
     @yield('content')
     @yield('footer-includes')
