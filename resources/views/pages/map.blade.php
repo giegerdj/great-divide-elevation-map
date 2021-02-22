@@ -29,10 +29,10 @@
                             <li role="presentation" class="active">
                                 <a href="#profile-tab" aria-controls="profile-tab" role="tab" data-toggle="tab">Profile + Stats</a>
                             </li>
-                            <li role="presentation">
-                                <a href="#map-options-tab" aria-controls="map-options-tab" role="tab" data-toggle="tab">Map Options</a>
-                            </li>
-                            <li class="pull-right" class="">
+{{--                            <li role="presentation">--}}
+{{--                                <a href="#map-options-tab" aria-controls="map-options-tab" role="tab" data-toggle="tab">Map Options</a>--}}
+{{--                            </li>--}}
+                            <li class="pull-right">
                                 <form class="form-inline">
                                     <div clas="form-group">
                                         <label for="#route-select">Current Route:</label>
@@ -79,41 +79,41 @@
                                 </div>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="map-options-tab">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 control-label">
-                                                        Units
-                                                    </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="direction" class="form-control disabled" disabled="disabled">
-                                                            <option value="imperial" selected>Feet/Miles</option>
-                                                            <option value="metric">Meters/Kilometers</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+{{--                            <div role="tabpanel" class="tab-pane" id="map-options-tab">--}}
+{{--                                <div class="container-fluid">--}}
+{{--                                    <div class="row">--}}
+{{--                                        <div class="col-sm-4">--}}
+{{--                                            <div class="form-horizontal">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label class="col-sm-4 control-label">--}}
+{{--                                                        Units--}}
+{{--                                                    </label>--}}
+{{--                                                    <div class="col-sm-8">--}}
+{{--                                                        <select name="direction" class="form-control disabled" disabled="disabled">--}}
+{{--                                                            <option value="imperial" selected>Feet/Miles</option>--}}
+{{--                                                            <option value="metric">Meters/Kilometers</option>--}}
+{{--                                                        </select>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 control-label">
-                                                        Grade Limit
-                                                    </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="direction" class="form-control disabled" disabled="disabled">
-                                                        @for ($i = 0; $i < 10; $i+=0.5)
-                                                            <option value="{{ $i }}" {{$i == 1 ? 'selected' : ''}}>{{$i}}%</option>
-                                                        @endfor
-                                                        </select>
-                                                        <p class="help-block">The grade at which elevation changes add to the total gain/loss</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label class="col-sm-4 control-label">--}}
+{{--                                                        Grade Limit--}}
+{{--                                                    </label>--}}
+{{--                                                    <div class="col-sm-8">--}}
+{{--                                                        <select name="direction" class="form-control disabled" disabled="disabled">--}}
+{{--                                                        @for ($i = 0; $i < 10; $i+=0.5)--}}
+{{--                                                            <option value="{{ $i }}" {{$i == 1 ? 'selected' : ''}}>{{$i}}%</option>--}}
+{{--                                                        @endfor--}}
+{{--                                                        </select>--}}
+{{--                                                        <p class="help-block">The grade at which elevation changes add to the total gain/loss</p>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -172,9 +172,6 @@
         ]) !!}
     </script>
 
-    <script src="/components/jquery/dist/jquery.min.js"></script>
-    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/components/handlebars/handlebars.min.js"></script>
-    <script src="/components/d3/d3.min.js"></script>
+    <script src="{{ mix('assets/build/js/libs.js') }}"></script>
     <script src="{{ mix('assets/build/js/app.js') }}"></script>
 @endsection

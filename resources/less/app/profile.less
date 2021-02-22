@@ -6,8 +6,37 @@
   font-size: 12px;
 }
 
-dl {
-  margin-bottom: 0;
+.dl-horizontal {
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.dl-horizontal dt {
+  float: left;
+  width: 90px;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#profile-tab {
+  .container-fluid {
+
+    max-height: 150px;
+    overflow: scroll;
+
+    @media (min-width: 768px) {
+      max-height: none;
+      overflow: visible;
+    }
+  }
+}
+
+.dl-horizontal dd {
+  margin-left: 110px;
 }
 
 .tab-content .tab-pane.active {
