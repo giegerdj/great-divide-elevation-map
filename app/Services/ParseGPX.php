@@ -1,6 +1,6 @@
 <?php
 
-namespace EP\Services;
+namespace App\Services;
 
 use Location\Coordinate;
 use Location\Distance\Vincenty;

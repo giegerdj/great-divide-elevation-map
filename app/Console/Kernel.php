@@ -1,10 +1,8 @@
 <?php
 
-namespace EP\Console;
+namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use EP\Console\Commands\TCXCreateProfileData;
-use EP\Console\Commands\GPXCreateProfileData;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -15,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        TCXCreateProfileData::class,
-        GPXCreateProfileData::class
+        //
     ];
 
     /**
@@ -27,18 +24,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // $schedule->command('inspire')->hourly();
     }
 
     /**
-     * Register the Closure based commands for the application.
+     * Register the commands for the application.
      *
      * @return void
      */
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
+
         require base_path('routes/console.php');
     }
 }
