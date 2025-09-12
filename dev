@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 0 ]; then
+    if [ "$1" == "npm" ]; then
+        shift 1
+        docker compose run --rm  \
+            node \
+            npm "$@"
+    elif [ "$1" == "cap" ]; then
+        shift 1
+        docker compose run --rm \
+            capistrano \
+            cap "$@"
+    elif [ "$1" == "build" ]; then
+      shift 1
+      docker build -f ./docker/"$@"/Dockerfile -t gdmbr/"$@":latest ./docker/"$@"/ --no-cache
+    else
+        docker compose "$@"
+    fi
+else
+    >&2 echo "Must pass a command to develop"
+    exit 1
+fi
