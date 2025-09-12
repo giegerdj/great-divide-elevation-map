@@ -1,0 +1,28 @@
+services:
+    web:
+        build:
+            context: ./docker/web
+            dockerfile: Dockerfile
+        image: great-divide-elevation-map/web
+        ports:
+            - "8080:80"
+        volumes:
+            - ./public:/var/www/html
+        networks:
+            - gdm-net
+    node:
+        build:
+            context: ./docker/node
+            dockerfile: Dockerfile
+        image: great-divide-elevation-map/node
+        ports:
+            - "3000:3000"
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: npm run dev
+        networks:
+            - gdm-net
+networks:
+    gdm-net:
+        driver: "bridge"
