@@ -441,3 +441,11 @@ var ElevationProfile = (function( $ ) {
     return Construct;
 
 })( jQuery );
+
+// Export for webpack
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ElevationProfile;
+}
+
+// Make ElevationProfile globally available
+window.ElevationProfile = ElevationProfile;

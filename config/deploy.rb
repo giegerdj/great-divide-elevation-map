@@ -20,10 +20,9 @@ namespace :app do
     desc "Compile web assets locally and send to the server"
     task :assets do
         branch = fetch(:branch)
-        system("rm -f public/assets/build/*")
+#         system("find public/assets/build/ -mindepth 1 ! -name '.gitignore' -exec rm -rf {} +")
         system("git checkout #{branch} && npm install && npm run build") or raise "Could not compile static assets"
         on roles(:app, :web) do
-           upload! "public/mix-manifest.json", "#{release_path}/public/"
            upload! "public/assets/build", "#{release_path}/public/assets/", recursive: true
         end
     end

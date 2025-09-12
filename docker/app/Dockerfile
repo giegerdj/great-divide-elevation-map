@@ -29,9 +29,7 @@ RUN id -u ubuntu &>/dev/null || useradd -ms /bin/bash -u 1000 ubuntu \
     && mkdir -p /run/php \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && grep -v "daemon off" /etc/nginx/nginx.conf > /tmp/nginx.conf \
-    && echo "daemon off;" >> /tmp/nginx.conf \
-    && mv /tmp/nginx.conf /etc/nginx/nginx.conf \
+    && sed -i '1i daemon off;' /etc/nginx/nginx.conf \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && sed -i 's/^;daemonize.*$/daemonize = no/g' /etc/php/8.2/fpm/php-fpm.conf \

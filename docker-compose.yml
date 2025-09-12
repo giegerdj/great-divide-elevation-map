@@ -23,6 +23,8 @@ services:
             - .:/var/www/html
         networks:
             - gdmbr-net
+        environment:
+            - WWWUID=${WWWUID}
     capistrano:
         build:
             context: ./docker/capistrano
