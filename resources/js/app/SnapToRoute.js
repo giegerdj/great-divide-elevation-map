@@ -374,3 +374,11 @@ MercatorProjection.prototype.fromLatLngToPixel = function(latlng, z) {
     var pixelCoordinate = new google.maps.Point(Math.round(normalizedPoint.x * scale), Math.round(normalizedPoint.y * scale) );
     return pixelCoordinate;
 };
+
+// Export for webpack
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = SnapToRoute;
+}
+
+// Make ElevationProfile globally available
+window.SnapToRoute = SnapToRoute;

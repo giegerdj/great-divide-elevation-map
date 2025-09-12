@@ -1,0 +1,40 @@
+services:
+    app:
+        build:
+            context: ./docker/app
+            dockerfile: Dockerfile
+        image: gdmbr/app
+        ports:
+            - "${APP_PORT}:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - gdmbr-net
+        environment:
+            - WWWUID=${WWWUID}
+    node:
+        build:
+            context: ./docker/node
+            dockerfile: Dockerfile
+        image: gdmbr/node
+        ports:
+            - "8976:8976"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - gdmbr-net
+        environment:
+            - WWWUID=${WWWUID}
+    capistrano:
+        build:
+            context: ./docker/capistrano
+            dockerfile: Dockerfile
+        image: gdmbr/capistrano
+        volumes:
+            - .:/var/www/html
+            - ~/.ssh:/root/.ssh
+        networks:
+            - gdmbr-net
+networks:
+  gdmbr-net:
+        driver: "bridge"

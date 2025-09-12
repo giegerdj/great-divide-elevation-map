@@ -30,3 +30,11 @@ Distance.fromMeters = function(meters) {
 Distance.fromMiles = function(miles) {
     return new Distance( miles * Distance.FEET_PER_MILE );
 }
+
+// Export for webpack
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Distance;
+}
+
+// Make Distance globally available
+window.Distance = Distance;

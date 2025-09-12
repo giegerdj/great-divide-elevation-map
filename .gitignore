@@ -1,9 +1,5 @@
 .DS_Store
-/public/assets/build/css/*
-!/public/assets/build/css/.gitkeep
-
-/public/assets/build/js/*
-!/public/assets/build/js/.gitkeep
+/public/assets/build/*
 
 /public/.htaccess
 

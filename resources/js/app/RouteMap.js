@@ -232,3 +232,11 @@ var RouteMap = (function( $ ) {
     return Construct;
 
 })( jQuery );
+
+// Export for webpack
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = RouteMap;
+}
+
+// Make RouteMap globally available
+window.RouteMap = RouteMap;
