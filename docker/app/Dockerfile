@@ -29,7 +29,9 @@ RUN id -u ubuntu &>/dev/null || useradd -ms /bin/bash -u 1000 ubuntu \
     && mkdir -p /run/php \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && echo "daemon off;" >> /etc/nginx/nginx.conf \
+    && grep -v "daemon off" /etc/nginx/nginx.conf > /tmp/nginx.conf \
+    && echo "daemon off;" >> /tmp/nginx.conf \
+    && mv /tmp/nginx.conf /etc/nginx/nginx.conf \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && sed -i 's/^;daemonize.*$/daemonize = no/g' /etc/php/8.2/fpm/php-fpm.conf \
@@ -37,7 +39,9 @@ RUN id -u ubuntu &>/dev/null || useradd -ms /bin/bash -u 1000 ubuntu \
 
 COPY default /etc/nginx/sites-available/default
 COPY start-container /usr/local/bin/start-container
-RUN chmod +x /usr/local/bin/start-container
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN chmod +x /usr/local/bin/start-container \
+    && mkdir -p /var/log/supervisor
 
 EXPOSE 80
 

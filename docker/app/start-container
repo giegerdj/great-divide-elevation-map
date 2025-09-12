@@ -21,5 +21,5 @@ if [ $# -gt 0 ]; then
     exec gosu ubuntu "$@"
 else
     # Otherwise start supervisord
-    /usr/bin/supervisord
+    /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
